@@ -3,32 +3,28 @@
 #include "DoubleLinkedList.h"
 
 int main(void) {
-  int j, k; 
+  int first = 1;
+  int second = 2;
+  int third = 3;
   int randomNum = 99;
-  char randomChar = 'Z';
+  // char randomChar = 'Z';
 
   int *i = calloc(4, sizeof(int));
-  char *c = calloc(4, sizeof(char));
+  // char *c = calloc(4, sizeof(char));
   DoubleLinkedList *numList = allocDList(sizeof(int));
-  DoubleLinkedList *charList = allocDList(sizeof(char));
+  // DoubleLinkedList *charList = allocDList(sizeof(char));
 
-  for(j = 0; j < 4; ++j) {
-    i[j] = j;
-    insertDListElementAt(numList, i+j, j);
-  }
+  // generate {1,2,3} using append()
+  appendDlist(numList, &first);
+  appendDlist(numList, &second);
+  appendDlist(numList, &third);
 
-  for(k = 0; k < 4; ++k) {
-    c[k] = 'A' + k;
-    insertDListElementAt(charList, c+k, k);
-  }
-
+  
   printDList(numList);
-  printDList(charList);
+  // printDList(charList);
 
-  insertDListElementAt(numList, &randomNum, 2);
-  insertDListElementAt(charList, &randomChar, 2);
+  // insertDListElementAt(numList, &randomNum, 2);
+  // insertDListElementAt(charList, &randomChar, 2);
 
-  printDList(numList);
-  printDList(charList);
   return 0;
 }

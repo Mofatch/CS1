@@ -24,6 +24,9 @@ typedef struct _BigInt {
   DoubleLinkedList *number;
 } BigInt;
 
+// prototypes
+void appendDList(DoubleLinkedList *list, Object newElement);
+
 DNode* allocNode(uint elementSize) {
   DNode *newNode = (DNode *)malloc(sizeof(DNode));
   newNode->prev = NULL;
@@ -124,13 +127,22 @@ void appendDList(DoubleLinkedList *list, Object newElement) {
 
   // empty list
   if(list->length == 0) {
-    // new tail is also new head
+    list->head = newNode;
   }
   // length 1
   else if(list->length == 1) {
-    //  
+    list->head->next = newNode;
+    newNode->prev = list->head;
   }
   // length 2+
+  else {
+    list->tail->next = newNode;
+    newNode->prev = list->tail;
+  }
+
+  // change tail and increment list length
+  list->tail = newNode;
+  list->length++;
 }
 
 void printDList(DoubleLinkedList *list) {
