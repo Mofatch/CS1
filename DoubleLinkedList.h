@@ -206,4 +206,34 @@ DoubleLinkedList* reverseList(DoubleLinkedList *list) {
   return newList;
 }
 
+Object removeDList(DoubleLinkedList *list, uint position) {
+  int index = 0;
+  Object element;
+  DNode *navigator = list->head;
+  
+  // empty list
+  if(list->length == 0) {
+    
+  }
+  // length 1
+  else if(list->length == 1) {
+
+  }
+  // length 2+
+  else{
+  while(navigator) {
+    if(index == position) {
+      element = navigator->data;
+      navigator->prev->next = navigator->next;
+      navigator->next->prev = navigator->prev;
+      free(navigator);
+      break;
+    }
+    index++;
+    navigator = navigator->next;
+  }
+  }
+
+  return element;
+}
 #endif
