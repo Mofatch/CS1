@@ -26,6 +26,7 @@ typedef struct _BigInt {
 
 // prototypes
 void appendDList(DoubleLinkedList *list, Object newElement);
+void insertDList(DoubleLinkedList *list, Object newElement);
 
 DNode* allocNode(uint elementSize) {
   DNode *newNode = (DNode *)malloc(sizeof(DNode));
@@ -81,7 +82,7 @@ void insertDListElementAt(DoubleLinkedList* list, Object newElement, uint positi
   else if(position == list->length)
     appendDList(list, newElement);
   else if(position == 0) {
-    // prepend list
+    insertDList(list, newElement);
   }
   else {
     // make a navigator and index
@@ -165,4 +166,31 @@ void printDList(DoubleLinkedList *list) {
   // freedom
   free(navigator);
 }
+
+void insertDList(DoubleLinkedList *list, Object newElement) {
+  DNode *newNode = allocNode(list->elementSize);
+  newNode->data = newElement;
+
+  // empty list
+  if(list->length == 0) {
+    // make newNode tail as well
+    list->tail = newNode;
+  }
+  // length 1
+  else if(list->length == 1) {
+    // connect newNode to tail
+    newNode->next = list->tail;
+    list->tail->prev = newNode;
+  }
+  // length 2+
+  else {
+    list->head->prev = newNode;
+    newNode->next = list->head;
+  }
+
+  // make new head and increment list length
+  list->head = newNode;
+  list->length++;
+}
+
 #endif

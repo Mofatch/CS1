@@ -16,30 +16,27 @@ int main(void) {
   DoubleLinkedList *numList = allocDList(sizeof(int));
   DoubleLinkedList *charList = allocDList(sizeof(char));
 
-  // generate {1,2,3} using append()
-  appendDList(numList, &first);
-  appendDList(numList, &second);
-  appendDList(numList, &third);
+  // generate {1,2,3} using insert()
+  insertDList(numList, &third);
+  insertDList(numList, &second);
+  insertDList(numList, &first);
 
-  // generate {a,b,c} using append()
-  appendDList(charList, &uno);
-  appendDList(charList, &dos);
-  appendDList(charList, &tres);
+  // generate {a,b,c} using insert()
+  insertDList(charList, &tres);
+  insertDList(charList, &dos);
+  insertDList(charList, &uno);
 
   // print originals
   printDList(numList);
   printDList(charList);
 
-  for(i = 0; i <= numList->length; ++i) {
-    printf("Inserting at %d\n", i);
-    // insert at new spot
-    insertDListElementAt(numList, &randomNum, i);
-    insertDListElementAt(charList, &randomChar, i);
+  // insert at new spot
+  insertDListElementAt(numList, &randomNum, 1);
+  insertDListElementAt(charList, &randomChar, 1);
 
-    // print updated lists
-    printDList(numList);
-    printDList(charList);
-  }
+  // print updated lists
+  printDList(numList);
+  printDList(charList);
 
   return 0;
 }
