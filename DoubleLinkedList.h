@@ -1,4 +1,5 @@
 #ifndef DOUBLELINKEDLIST_H_
+// missing second underscore in TrevorDLL
 #define DOUBLELINKEDLIST_H_
 
 #include <stdio.h>
@@ -127,12 +128,9 @@ void appendDList(DoubleLinkedList *list, Object newElement) {
   }
   // length 1
   else if(list->length == 1) {
-    // current tail/head splits into tail and head
+    //  
   }
   // length 2+
-  else {
-    // tail and head are separate
-  }
 }
 
 void printDList(DoubleLinkedList *list) {
