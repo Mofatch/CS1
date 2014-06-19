@@ -78,22 +78,10 @@ void insertDListElementAt(DoubleLinkedList* list, Object newElement, uint positi
   // if the position is out of range, allowing for appending
   if(position > list->length)
     puts("Position out of range.");
-  // TO DO: consolidate with append() once written
-  else if(position == list->length) {
-    if(position == 0) {
-      // create from empty list
-      list->head = newNode;
-    }
-    else if(position == 1) {
-      newNode->prev = list->head;
-      list->head->next = newNode;
-    }
-    else {
-      newNode->prev = list->tail;
-      list->tail->next = newNode;
-    }
-    list->tail = newNode;
-    list->length++;
+  else if(position == list->length)
+    appendDList(list, newElement);
+  else if(position == 0) {
+    // prepend list
   }
   else {
     // make a navigator and index
@@ -101,18 +89,16 @@ void insertDListElementAt(DoubleLinkedList* list, Object newElement, uint positi
     int index = 0;
     while(navigator) {
       if(index == position) {
-        // insert node where navigator stops
-        newNode->next = navigator;
+        // connect newNode to prev
         newNode->prev = navigator->prev;
-        // check if neighbors are NULL first. Otherwise, connect.
-        if(navigator->prev)
-          navigator->prev->next = newNode;
+        newNode->prev->next = newNode;
 
-        // create 
+        // connect newNode to next
+        newNode->next = navigator;
         navigator->prev = newNode;
-        list->length++;
 
-        // exit the loop once the node has been inserted
+        // increment the list length and exit the loop
+        list->length++;
         break;
       }
       index++;
