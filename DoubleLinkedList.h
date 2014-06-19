@@ -71,7 +71,6 @@ void releaseDList(DoubleLinkedList *list) {
   free(list);
 }
 
-// TO DO: fix middle insert
 void insertDListElementAt(DoubleLinkedList* list, Object newElement, uint position) {
   DNode *newNode = allocNode(list->elementSize);
   newNode->data = newElement;
@@ -191,6 +190,20 @@ void insertDList(DoubleLinkedList *list, Object newElement) {
   // make new head and increment list length
   list->head = newNode;
   list->length++;
+}
+
+DoubleLinkedList* reverseList(DoubleLinkedList *list) {
+  DoubleLinkedList *newList = allocDList(list->elementSize);
+
+  // create a navigator
+  DNode *navigator = list->head;
+
+  while(navigator) {
+    insertDList(newList, navigator->data);
+    navigator = navigator->next;
+  }
+
+  return newList;
 }
 
 #endif

@@ -30,13 +30,9 @@ int main(void) {
   printDList(numList);
   printDList(charList);
 
-  // insert at new spot
-  insertDListElementAt(numList, &randomNum, 1);
-  insertDListElementAt(charList, &randomChar, 1);
-
   // print updated lists
-  printDList(numList);
-  printDList(charList);
+  printDList(reverseList(numList));
+  printDList(reverseList(charList));
 
   return 0;
 }
