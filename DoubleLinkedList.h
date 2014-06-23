@@ -1,5 +1,4 @@
 #ifndef DOUBLELINKEDLIST_H_
-// missing second underscore in TrevorDLL
 #define DOUBLELINKEDLIST_H_
 
 #include <stdio.h>
@@ -161,9 +160,6 @@ void printDList(DoubleLinkedList *list) {
     
   }
   printf("}\n");
-
-  // freedom
-  free(navigator);
 }
 
 void insertDList(DoubleLinkedList *list, Object newElement) {
@@ -192,7 +188,7 @@ void insertDList(DoubleLinkedList *list, Object newElement) {
   list->length++;
 }
 
-DoubleLinkedList* reverseList(DoubleLinkedList *list) {
+DoubleLinkedList* reverseDList(DoubleLinkedList *list) {
   DoubleLinkedList *newList = allocDList(list->elementSize);
 
   // create a navigator
@@ -205,7 +201,7 @@ DoubleLinkedList* reverseList(DoubleLinkedList *list) {
 
   return newList;
 }
-
+// TO DO: check if this should support negative int indices
 Object removeDList(DoubleLinkedList *list, uint position) {
   int index = 0;
   Object element;
@@ -235,5 +231,26 @@ Object removeDList(DoubleLinkedList *list, uint position) {
   }
 
   return element;
+}
+
+DoubleLinkedList* halfList(DoubleLinkedList *list) {
+  // create blank list
+  DoubleLinkedList *newList = allocDList(list->elementSize);
+
+  // create navigator and index counter
+  DNode *navigator = list->head;
+  int index = 0;
+
+  while(navigator) {
+    if(index >= ( (double)list->length / 2) ) {
+      appendDList(newList, navigator->data);
+    }
+
+    // move forward
+    navigator = navigator->next;
+    index++;
+  }
+
+  return newList;
 }
 #endif

@@ -20,19 +20,21 @@ int main(void) {
   insertDList(numList, &third);
   insertDList(numList, &second);
   insertDList(numList, &first);
+  insertDList(numList, &randomNum);
 
   // generate {a,b,c} using insert()
   insertDList(charList, &tres);
   insertDList(charList, &dos);
   insertDList(charList, &uno);
+  insertDList(charList, &randomChar);
 
   // print originals
   printDList(numList);
   printDList(charList);
 
   // print updated lists
-  printDList(reverseList(numList));
-  printDList(reverseList(charList));
+  printDList(halfList(numList));
+  printDList(halfList(charList));
 
   return 0;
 }
