@@ -5,19 +5,23 @@
 #include <stdlib.h>
 #include "DoubleLinkedList.h"
 
+// prototypes
+uint* allocDigit(uint number);
+
 BigInt* allocBigInt(uint smallNumber) {
   // allocate new list
   BigInt *newBigInt = malloc(sizeof(BigInt));
   newBigInt->number = allocDList(sizeof(smallNumber));
 
-  // here, use a pointer to allocDigit to create an address for
-  // each digit in smallNumber, which can now be modified, since its
-  // digits will remain known via their respective pointers. 
   while(smallNumber > 0) {
     // mod 10 to get next digit from right
-    // append **Need to pass a pointer, not a uint**
+    appendDList(newBigInt->number, allocDigit(smallNumber % 10));
+
     // div 10 to truncate
+    smallNumber /= 10;
   }
+
+  return newBigInt;
 }
 
 void printBigInt(BigInt *bigNum) {

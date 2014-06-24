@@ -207,27 +207,27 @@ Object removeDList(DoubleLinkedList *list, uint position) {
   Object element;
   DNode *navigator = list->head;
   
-  // empty list
-  if(list->length == 0) {
-    
+  // TO DO: error handling, conditional return values
+  if(position >= list->length) {
+    puts("Position out of range.");
+    return NULL;
   }
-  // length 1
-  else if(list->length == 1) {
-
+  // empty list
+  else if(list->length == 0) {
+    puts("The list is empty.");
+    return NULL;
   }
   // length 2+
   else{
-  while(navigator) {
-    if(index == position) {
-      element = navigator->data;
-      navigator->prev->next = navigator->next;
-      navigator->next->prev = navigator->prev;
-      free(navigator);
-      break;
+    while(navigator) {
+      if(index == position) {
+        element = navigator->data;
+
+        break;
+      }
+      index++;
+      navigator = navigator->next;
     }
-    index++;
-    navigator = navigator->next;
-  }
   }
 
   return element;
@@ -253,4 +253,5 @@ DoubleLinkedList* halfList(DoubleLinkedList *list) {
 
   return newList;
 }
+
 #endif

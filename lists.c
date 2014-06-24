@@ -32,9 +32,8 @@ int main(void) {
   printDList(numList);
   printDList(charList);
 
-  // print updated lists
-  printDList(halfList(numList));
-  printDList(halfList(charList));
+  // print selected elements
+  printElement(removeDList(numList, 9));
 
   return 0;
 }
