@@ -26,6 +26,7 @@ typedef struct _BigInt {
 // prototypes
 void appendDList(DoubleLinkedList *list, Object newElement);
 void insertDList(DoubleLinkedList *list, Object newElement);
+void releaseDNodeWeb(DNode *node);
 
 DNode* allocNode(uint elementSize) {
   DNode *newNode = (DNode *)malloc(sizeof(DNode));
@@ -47,27 +48,33 @@ DoubleLinkedList* allocDList(uint elementSize) {
 }
 
 void releaseDList(DoubleLinkedList *list) {
-  DNode *navigator = list->head;
-  // if the list isn't empty, free elements of the list
-  while (navigator) {
-  // free the nodes and data within
-    if(navigator->prev) {
-      if(navigator->prev->data)
-        free(navigator->prev->data);
-      free(navigator->prev);
-
-      // step forward
-      navigator = navigator->next;
+  if(list) {
+    if(list->head) {
+      releaseDNodeWeb(list->head);
     }
-      // if navigator is at the end, free navigator
-    if(!navigator->next) {
-      if(navigator->data)
-        free(navigator->data);
-      free(navigator);
-    }
+    free(list);
   }
+  // DNode *navigator = list->head;
+  // if the list isn't empty, free elements of the list
+  // while (navigator) {
+  // // free the nodes and data within
+  //   if(navigator->prev) {
+  //     if(navigator->prev->data)
+  //       free(navigator->prev->data);
+  //     free(navigator->prev);
+
+  //     // step forward
+  //     navigator = navigator->next;
+  //   }
+  //     // if navigator is at the end, free navigator
+  //   if(!navigator->next) {
+  //     if(navigator->data)
+  //       free(navigator->data);
+  //     free(navigator);
+  //   }
+  // }
   // free the list
-  free(list);
+  // free(list);
 }
 
 void insertDListElementAt(DoubleLinkedList* list, Object newElement, uint position) {
@@ -254,4 +261,14 @@ DoubleLinkedList* halfList(DoubleLinkedList *list) {
   return newList;
 }
 
+// TO DO: Delete if unused
+void releaseDNodeWeb(DNode *node) {
+  if(node) {
+    if(node->data) {
+      free(node->data);
+    }
+    releaseDNodeWeb(node->next);
+    free(node);
+  }
+}
 #endif

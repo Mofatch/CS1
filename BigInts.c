@@ -8,5 +8,9 @@ int main(void) {
 
   puts("printing...");
   printBigInt(bigInt);
+
+  // releaseBigInt(bigInt);
+  // printBigInt(bigInt);
+  
   return 0;
 }

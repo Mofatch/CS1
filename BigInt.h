@@ -24,14 +24,26 @@ BigInt* allocBigInt(uint smallNumber) {
   return newBigInt;
 }
 
-void printBigInt(BigInt *bigNum) {
-  DNode *navigator = bigNum->number->tail;
-  while(navigator) {
-    printf("%u", *(uint *)navigator->data);
-    navigator = navigator->prev;
+void releaseBigInt(BigInt *bigNum) {
+  if(bigNum) {
+    releaseDList(bigNum->number);
   }
 }
 
+void printBigInt(BigInt *bigNum) {
+  if(bigNum) {
+    if(bigNum->number) {
+      DNode *navigator = bigNum->number->tail;
+      while(navigator) {
+        printf("%u", *(uint *)navigator->data);
+        navigator = navigator->prev;
+      }
+    }
+  }
+
+}
+
+// create memory for a given uint
 uint* allocDigit(uint number) {
   uint *myNum = malloc(sizeof(number));
   *myNum = number;
