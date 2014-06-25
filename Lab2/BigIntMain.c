@@ -68,6 +68,8 @@ int main(int argc, char** argv){
 
   //reverse list
   printf("TESTING REVERSE ...\n\n");
+  /*EDIT: function call uses wrong name
+  DoubleLinkedList* reverse = reverseList(list);*/
   DoubleLinkedList* reverse = reverseDList(list);
   debugDList(reverse);
   printf("\n");
@@ -76,6 +78,8 @@ int main(int argc, char** argv){
 
   //testing remove
   printf("TESTING REMOVE ...\n\n");
+  /*EDIT: changed size to length
+  while(reverse->size){*/
   while(reverse->length){
     removeDList(reverse, 0);
     debugDList(reverse);
@@ -98,14 +102,16 @@ int main(int argc, char** argv){
   releaseDList(half);
   releaseDList(list);
   //Alloc two BigInts to test operation
-  /*
+
   BInt first = allocBigInt(5);
   BInt second = allocBigInt(4);
 
   //add Test
   BInt addition = addBigInt(first, second);
   printBigInt(addition);
-  assert(toInt(addition) ==  20);
+  /*EDIT: literal should be 5 + 4, not 5 * 4
+  assert(toInt(addition) ==  20);*/
+  assert(toInt(addition) ==  9);
   releaseBigInt(addition);
   //causing overflow
   //1) -1 would become the largest int because the int is unsigned
@@ -189,6 +195,7 @@ int main(int argc, char** argv){
   releaseBigInt(mulTestLong);
 
   //dividable tests
+  /*EDIT: the name test is already used for a different variable
   BInt test = allocBigInt(240);
   assert(isBigIntDividableBy(test, 2));
   assert(isBigIntDividableBy(test, 3));
@@ -196,10 +203,19 @@ int main(int argc, char** argv){
   assert(isBigIntDividableBy(test, 6));
   assert(isBigIntDividableBy(test, 8));
   assert(!isBigIntDividableBy(test, 9));
-  releaseBigInt(test);
+  releaseBigInt(test);*/
+
+  BInt test1 = allocBigInt(240);
+    assert(isBigIntDividableBy(test1, 2));
+    assert(isBigIntDividableBy(test1, 3));
+    assert(isBigIntDividableBy(test1, 5));
+    assert(isBigIntDividableBy(test1, 6));
+    assert(isBigIntDividableBy(test1, 8));
+    assert(!isBigIntDividableBy(test1, 9));
+    releaseBigInt(test1);
 
   releaseBigInt(first);
   releaseBigInt(second);
-   */
+
   return 0;
 }
