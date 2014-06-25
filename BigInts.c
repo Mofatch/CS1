@@ -6,11 +6,17 @@ int main(void) {
   puts("allocating...");
   BigInt *bigInt = allocBigInt(312);
 
-  puts("printing...");
+  // if(bigInt->number->head) {
+  //   printf("%u\n", *(uint *)bigInt->number->head->data);
+  // }
   printBigInt(bigInt);
 
-  // releaseBigInt(bigInt);
-  // printBigInt(bigInt);
-  
+  puts("releasing...");
+  releaseBigInt(bigInt);
+
+  puts("printing...");
+  printBigInt(bigInt);
+  puts("done printing...");
+
   return 0;
 }

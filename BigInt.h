@@ -26,21 +26,30 @@ BigInt* allocBigInt(uint smallNumber) {
 
 void releaseBigInt(BigInt *bigNum) {
   if(bigNum) {
-    releaseDList(bigNum->number);
+    if(bigNum->number) {
+      puts("freeing the number");
+      releaseDList(bigNum->number);
+      puts("setting to NULL");
+      bigNum->number = NULL;
+    }
+    free(bigNum);
   }
 }
 
 void printBigInt(BigInt *bigNum) {
   if(bigNum) {
-    if(bigNum->number) {
+    if(bigNum->number->length > 0) {
+      puts("We're in.");
       DNode *navigator = bigNum->number->tail;
       while(navigator) {
-        printf("%u", *(uint *)navigator->data);
+        printf("%u\n", *(uint *)navigator->data);
         navigator = navigator->prev;
       }
+      printf("\n");
     }
+    else
+      puts("Nothing to print.");
   }
-
 }
 
 // create memory for a given uint

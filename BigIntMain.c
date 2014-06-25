@@ -68,7 +68,7 @@ int main(int argc, char** argv){
 
   //reverse list
   printf("TESTING REVERSE ...\n\n");
-  DoubleLinkedList* reverse = reverseList(list);
+  DoubleLinkedList* reverse = reverseDList(list);
   debugDList(reverse);
   printf("\n");
   printDList(reverse);
@@ -76,7 +76,7 @@ int main(int argc, char** argv){
 
   //testing remove
   printf("TESTING REMOVE ...\n\n");
-  while(reverse->size){
+  while(reverse->length){
     removeDList(reverse, 0);
     debugDList(reverse);
     printf("\n");
