@@ -3,20 +3,17 @@
 #include "BigInt.h"
 
 int main(void) {
-  puts("allocating...");
+  // allocate a bigInt
   BigInt *bigInt = allocBigInt(312);
 
-  // if(bigInt->number->head) {
-  //   printf("%u\n", *(uint *)bigInt->number->head->data);
-  // }
+  // print that shit
   printBigInt(bigInt);
 
-  puts("releasing...");
+  // release it into the wild
   releaseBigInt(bigInt);
 
-  puts("printing...");
+  // try to print it, fail
   printBigInt(bigInt);
-  puts("done printing...");
 
   return 0;
 }
