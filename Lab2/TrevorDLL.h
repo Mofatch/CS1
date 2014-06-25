@@ -6,8 +6,7 @@
  */
 
 #ifndef DOUBLELINKEDLIST_H_
-#define DOUBLELINKEDLIST_H_ /* NOTE: originally had missing underscore
- 														   after H */
+#define DOUBLELINKEDLIST_H_
 
 #include <stdlib.h>
 #include <stdio.h>

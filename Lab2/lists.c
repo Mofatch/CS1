@@ -33,7 +33,11 @@ int main(void) {
   printDList(charList);
 
   // print selected elements
-  printElement(removeDList(numList, 9));
+  printElement(removeDList(numList, 2));
+
+  // print resulting lists
+  printDList(numList);
+  printDList(charList);
 
   return 0;
 }

@@ -208,14 +208,14 @@ DoubleLinkedList* reverseDList(DoubleLinkedList *list) {
 
   return newList;
 }
-// TO DO: FIX THIS, check if this should support negative int indices
-Object removeDList(DoubleLinkedList *list, uint position) {
+
+Object removeDList(DoubleLinkedList *list, int position) {
   int index = 0;
   Object element;
   DNode *navigator = list->head;
   
-  // TO DO: error handling, conditional return values
-  if(position >= list->length) {
+  // out of bounds
+  if(position >= list->length || position < 0) {
     puts("Position out of range.");
     return NULL;
   }
@@ -224,19 +224,40 @@ Object removeDList(DoubleLinkedList *list, uint position) {
     puts("The list is empty.");
     return NULL;
   }
-  // length 2+
+  // length > 0
   else{
     while(navigator) {
       if(index == position) {
+        // collect data
         element = navigator->data;
+
+        // first element
+        if(index == 0) {
+          navigator->next->prev = NULL;
+          list->head = navigator->next;
+        }
+        // last element
+        else if(index == (list->length - 1)) {
+          navigator->prev->next = NULL;
+          list->tail = navigator->prev;
+        }
+        // anything in the range (first,last)
+        else if(index >= 1) {
+          navigator->prev->next = navigator->next;
+          navigator->next->prev = navigator->prev;
+        }
 
         break;
       }
-      index++;
+      // step forward
       navigator = navigator->next;
+      index++;
     }
   }
-
+  // decrement list length and free node
+  list->length--;
+  free(navigator->data);
+  free(navigator);
   return element;
 }
 
@@ -259,5 +280,9 @@ DoubleLinkedList* halfList(DoubleLinkedList *list) {
   }
 
   return newList;
+}
+
+void printElement(Object element) {
+    printf("%u\n", *(uint *)element);
 }
 #endif
