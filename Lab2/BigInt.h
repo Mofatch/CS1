@@ -34,6 +34,30 @@ void releaseBigInt(BigInt *bigNum) {
   }
 }
 
+int compareBigInt(BigInt *first, BigInt *second) {
+  int theOneTrueDigit;
+  int i = 0;
+
+  // bigger first number
+  if(first->number->length > second->number->length) {
+    theOneTrueDigit = 1;
+  }
+  // bigger second number
+  else if(first->number->length < second->number->length) {
+    theOneTrueDigit = -1;
+  }
+  // same number of digits
+  else {
+    for(i = 0; i < first->number->length; ++i) {
+      uint firstElement = *(uint *)first->number->data;
+      uint secondElement = *(uint *)second->number->data;
+      // TO DO: write this
+    }
+
+  }
+  return theOneTrueDigit;
+}
+
 void printBigInt(BigInt *bigNum) {
   if(bigNum) {
     if(bigNum->number->length > 0) {

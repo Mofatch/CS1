@@ -208,7 +208,7 @@ DoubleLinkedList* reverseDList(DoubleLinkedList *list) {
 
   return newList;
 }
-// TO DO: check if this should support negative int indices
+// TO DO: FIX THIS, check if this should support negative int indices
 Object removeDList(DoubleLinkedList *list, uint position) {
   int index = 0;
   Object element;
