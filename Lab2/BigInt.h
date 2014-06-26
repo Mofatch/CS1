@@ -103,6 +103,14 @@ BigInt* shiftLeftBigInt(BigInt *bigNum) {
   return newBigInt;
 }
 
+BigInt* shiftRightBigInt(BigInt *bigNum) {
+  // TO DO: refactor with toInt(bigNum) once written  
+  BigInt *newBigInt = addBigInt(allocBigInt(0), bigNum);
+  free(removeDList(newBigInt->number, 0));
+
+  return newBigInt;
+}
+
 int compareBigInt(BigInt *first, BigInt *second) {
   int theOneTrueDigit = 0; // same until proven different
 
