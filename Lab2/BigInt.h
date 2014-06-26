@@ -108,6 +108,9 @@ BigInt* shiftRightBigInt(BigInt *bigNum) {
   BigInt *newBigInt = addBigInt(allocBigInt(0), bigNum);
   free(removeDList(newBigInt->number, 0));
 
+  if(newBigInt->number->length == 0) {
+    insertDList(newBigInt->number, allocDigit(0));
+  }
   return newBigInt;
 }
 

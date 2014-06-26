@@ -4,7 +4,7 @@
 
 int main(void) {
   // allocate a bigInt
-  BigInt *firstBig = allocBigInt(212);
+  BigInt *firstBig = allocBigInt(2);
   BigInt *secondBig = allocBigInt(1);
   BigInt *leftShift = shiftLeftBigInt(firstBig);
   BigInt *rightShift = shiftRightBigInt(firstBig);
