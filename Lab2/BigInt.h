@@ -108,6 +108,7 @@ BigInt* shiftRightBigInt(BigInt *bigNum) {
   BigInt *newBigInt = addBigInt(allocBigInt(0), bigNum);
   free(removeDList(newBigInt->number, 0));
 
+  // dividing any number in [0,9] by 10 should yield 0
   if(newBigInt->number->length == 0) {
     insertDList(newBigInt->number, allocDigit(0));
   }
