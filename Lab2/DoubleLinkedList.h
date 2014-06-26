@@ -223,9 +223,16 @@ Object removeDList(DoubleLinkedList *list, int position) {
     puts("The list is empty.");
     return NULL;
   }
-  // length > 0
+  // length 1
+  else if(list->length == 1) {
+    element = navigator->data;
+    list->head = NULL;
+    list->tail = NULL;
+  }
+  // length 2+
   else{
     while(navigator) {
+      puts("navigator");
       if(index == position) {
         // collect data
         element = navigator->data;

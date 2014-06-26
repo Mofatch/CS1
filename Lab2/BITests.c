@@ -4,18 +4,13 @@
 
 int main(void) {
   // allocate a bigInt
-  BigInt *firstBig = allocBigInt(441);
-  BigInt *secondBig = allocBigInt(312);
+  BigInt *firstBig = allocBigInt(200000);
+  BigInt *secondBig = allocBigInt(1);
 
   // print that shit
   printBigInt(firstBig);
   printBigInt(secondBig);
+  printBigInt(addBigInt(firstBig, secondBig));
 
-  shiftLeftBigInt(firstBig);
-  shiftLeftBigInt(firstBig);
-  shiftLeftBigInt(firstBig);
-
-  printBigInt(firstBig);
-  printf("Length: %d", firstBig->number->length);
   return 0;
 }

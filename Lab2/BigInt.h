@@ -13,13 +13,18 @@ BigInt* allocBigInt(uint smallNumber) {
   BigInt *newBigInt = malloc(sizeof(BigInt));
   newBigInt->number = allocDList(sizeof(smallNumber));
 
-  // add digits
-  while(smallNumber > 0) {
-    // mod 10 to get next digit from right
-    appendDList(newBigInt->number, allocDigit(smallNumber % 10));
+  if(smallNumber == 0) {
+    appendDList(newBigInt->number, allocDigit(0));
+  }
+  else {
+    // add digits
+    while(smallNumber > 0) {
+      // mod 10 to get next digit from right
+      appendDList(newBigInt->number, allocDigit(smallNumber % 10));
 
-    // div 10 to truncate
-    smallNumber /= 10;
+      // div 10 to truncate
+      smallNumber /= 10;
+    }
   }
 
   return newBigInt;
@@ -35,17 +40,71 @@ void releaseBigInt(BigInt *bigNum) {
   }
 }
 
-// TO DO: write this
 BigInt* addBigInt(BigInt *first, BigInt *second) {
   BigInt *newBigInt = allocBigInt(0);
-  /*code*/
+  DNode *firstNavigator = first->number->head;
+  DNode *secondNavigator = second->number->head;
+  uint carryOver = 0;
+  uint digitSum = 0;
+
+  // clear newBigInt
+  removeDList(newBigInt->number, 0);
+  
+  do {
+    // two digits to add
+    if(firstNavigator && secondNavigator) {
+      digitSum = *(uint *)(firstNavigator->data) + *(uint *)(secondNavigator->data) + carryOver;
+      carryOver = digitSum / 10;
+
+      // add digitSum % 10 to current digit slot
+      appendDList(newBigInt->number, allocDigit(digitSum % 10));
+
+      // move forward
+      firstNavigator = firstNavigator->next;
+      secondNavigator = secondNavigator->next;
+    }
+    // first digit only
+    else if(firstNavigator) {
+      digitSum = *(uint *)(firstNavigator->data) + carryOver;
+      carryOver = digitSum / 10;
+
+      // create new digit
+      appendDList(newBigInt->number, allocDigit(digitSum % 10));
+
+      // move first forward
+      firstNavigator = firstNavigator->next;
+    }
+    // second digit only
+    else if(secondNavigator) {
+      digitSum = *(uint *)(secondNavigator->data) + carryOver;
+      carryOver = digitSum / 10;
+
+      // create new digit
+      appendDList(newBigInt->number, allocDigit(digitSum % 10));
+
+      // move first forward
+      secondNavigator = secondNavigator->next;
+    }
+    // carryOver only
+    else {
+      appendDList(newBigInt->number, allocDigit(carryOver));
+      carryOver = 0;
+    }
+  } while(firstNavigator || secondNavigator || carryOver);
+
   return newBigInt;
 }
 
 BigInt* shiftLeftBigInt(BigInt *bigNum) {
+  // TO DO: refactor with addBigInt(), then toInt(bigNum) once written
+  BigInt *newBigInt = allocBigInt(0);
+  // add new to bigNum
+  // use allocDigit() here
   uint *zero = malloc(sizeof(uint));
   *zero = 0;
-  insertDList(bigNum->number, zero);
+  insertDList(newBigInt->number, zero);
+
+  return newBigInt;
 }
 
 int compareBigInt(BigInt *first, BigInt *second) {
