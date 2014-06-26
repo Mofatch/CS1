@@ -247,7 +247,7 @@ Object removeDList(DoubleLinkedList *list, int position) {
           list->tail = navigator->prev;
         }
         // anything in the range (first,last)
-        else if(index >= 1) {
+        else {
           navigator->prev->next = navigator->next;
           navigator->next->prev = navigator->prev;
         }
@@ -261,8 +261,8 @@ Object removeDList(DoubleLinkedList *list, int position) {
   }
   // decrement list length and free node
   list->length--;
-  free(navigator->data);
   free(navigator);
+
   return element;
 }
 

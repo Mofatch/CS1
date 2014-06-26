@@ -3,10 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "DoubleLinkedList.h"
 
 // prototypes
 uint* allocDigit(uint number);
+uint toInt(BigInt* bigNum);
 
 BigInt* allocBigInt(uint smallNumber) {
   // allocate new list
@@ -97,7 +99,7 @@ BigInt* addBigInt(BigInt *first, BigInt *second) {
 
 BigInt* shiftLeftBigInt(BigInt *bigNum) {
   // TO DO: refactor with toInt(bigNum) once written
-  BigInt *newBigInt = addBigInt(allocBigInt(0), bigNum);
+  BigInt *newBigInt = allocBigInt(toInt(bigNum));
   insertDList(newBigInt->number, allocDigit(0));
 
   return newBigInt;
@@ -105,14 +107,40 @@ BigInt* shiftLeftBigInt(BigInt *bigNum) {
 
 BigInt* shiftRightBigInt(BigInt *bigNum) {
   // TO DO: refactor with toInt(bigNum) once written  
-  BigInt *newBigInt = addBigInt(allocBigInt(0), bigNum);
+  BigInt *newBigInt = allocBigInt(toInt(bigNum));
   free(removeDList(newBigInt->number, 0));
-
   // dividing any number in [0,9] by 10 should yield 0
   if(newBigInt->number->length == 0) {
     insertDList(newBigInt->number, allocDigit(0));
   }
+
   return newBigInt;
+}
+
+uint toInt(BigInt* bigNum) {
+  uint MAX = pow(2, sizeof(uint)*8)-1;
+  DNode *navigator = bigNum->number->head;
+  int exponent = 0;
+  uint value = 0;
+  uint digit;
+
+  while(navigator) {
+    digit = *(uint *)navigator->data;
+    if((value + (pow(10, exponent) * digit) <= MAX)) {
+      // increase value
+      value += (pow(10, exponent) * digit);
+
+      // increment exponent and navigator
+      exponent++;
+      navigator = navigator->next;
+    }
+    else {
+      puts("Value outside of int capacity.");
+      return 0;
+    }
+  }
+
+  return value;
 }
 
 int compareBigInt(BigInt *first, BigInt *second) {

@@ -4,7 +4,7 @@
 
 int main(void) {
   // allocate a bigInt
-  BigInt *firstBig = allocBigInt(2);
+  BigInt *firstBig = allocBigInt(4294967295);
   BigInt *secondBig = allocBigInt(1);
   BigInt *leftShift = shiftLeftBigInt(firstBig);
   BigInt *rightShift = shiftRightBigInt(firstBig);
@@ -15,7 +15,7 @@ int main(void) {
   printBigInt(secondBig);
 
   // untampered lengths
-  printf("%d\n", firstBig->number->length);
+  printf("Length: %d\n", firstBig->number->length);
 
   puts("Shift Left First Big Integer:");
   printBigInt(leftShift);
@@ -29,5 +29,7 @@ int main(void) {
   puts("New New Length:");
   printf("%d\n", rightShift->number->length);
 
+  puts("Testing to int:");
+  printf("%u", toInt(firstBig));
   return 0;
 }
