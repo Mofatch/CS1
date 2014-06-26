@@ -1,0 +1,3 @@
+-in shiftLeftBigInt()
+  -in allocBigInt()
+   &digit passed into appendDList. Went out of scope(?) after function finished. 

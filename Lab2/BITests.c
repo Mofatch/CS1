@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "BigInt.h"
+#include "TrevorBigInt.h"
 
 int main(void) {
   // allocate a bigInt
-  BigInt *firstBig = allocBigInt(4294967295);
+  puts("allocating...");
+  BigInt *firstBig = allocBigInt(30);
   BigInt *secondBig = allocBigInt(1);
+  puts("shifting...");
   BigInt *leftShift = shiftLeftBigInt(firstBig);
+  puts("shifted left...");
   BigInt *rightShift = shiftRightBigInt(firstBig);
+  puts("shifted right...");
 
   // print that shit
   puts("Big Integers:");

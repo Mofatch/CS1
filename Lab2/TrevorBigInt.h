@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-//#include "DoubleLinkedList.h"
+#include "TrevorDLL.h"
 
 typedef unsigned int uint;
 typedef unsigned long ulong;
@@ -22,8 +22,11 @@ typedef struct _BigInt{
 	DoubleLinkedList* number;
 }BigInt;
 
+// prototypes
 void simplifyBigInt(BigInt* bi);
 BigInt* shiftLeftBigInt(BigInt* bi);
+uint* allocDigit(uint number);
+uint toInt(BigInt* bi);
 
 //allocates memory for a BigInt and initializes the first digit of the number stored
 BigInt* allocBigInt(uint digit){
@@ -32,7 +35,7 @@ BigInt* allocBigInt(uint digit){
 	bi->number = allocDList(sizeof(uint));
 
 	//add smallNumber as the first digit in bi
-	appendDList(bi->number, &digit);
+	appendDList(bi->number, allocDigit(digit));
 
 	simplifyBigInt(bi);
 
@@ -55,7 +58,8 @@ void simplifyBigInt(BigInt* bi){
 	DNode* ptr = bi->number->tail;
 
 	//check last element
-	if(*(uint*)bi->number->tail->data  > 9){
+	if(*(uint*)(bi->number->tail->data)  > 9){
+		puts("too big");
 		simplified = false;
 		temp = *(uint*)ptr->data / 10;
 		appendDList(bi->number, &temp);
@@ -66,6 +70,7 @@ void simplifyBigInt(BigInt* bi){
 
 	//run through remaining element moving from tail to head
 	while(ptr){
+		puts("wheeeee!");
 		if(*(uint*)ptr->data > 9){
 			simplified = false;
 			*(uint*)ptr->next->data += *(uint*)ptr->data /10;
@@ -76,6 +81,7 @@ void simplifyBigInt(BigInt* bi){
 
 	//remove any leading zero
 	while(bi->number->tail && *(uint*)bi->number->tail->data == 0 && bi->number->length != 1){
+		puts("removing zeroes...");
 		removeDList(bi->number, bi->number->length - 1);
 	}
 
@@ -204,6 +210,8 @@ BigInt* shiftLeftBigInt(BigInt* bi){
 	uint a;
 	DNode* ptr = bi->number->tail;
 	BigInt* result = allocBigInt(0);
+	puts("removing...");
+	printf("%u", toInt(result));
 	removeDList(result->number, 0);
 
 	//copy input list
@@ -395,6 +403,14 @@ void printBigInt(BigInt* bi){
 		ptr = ptr->prev;
 	}
 
+}
+
+// create memory for a given uint
+uint* allocDigit(uint number) {
+  uint *myNum = malloc(sizeof(number));
+  *myNum = number;
+
+  return myNum;
 }
 
 #endif /* BIGINT_H_ */
