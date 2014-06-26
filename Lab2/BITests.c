@@ -4,21 +4,18 @@
 
 int main(void) {
   // allocate a bigInt
-  BigInt *firstBig = allocBigInt(312);
+  BigInt *firstBig = allocBigInt(441);
   BigInt *secondBig = allocBigInt(312);
 
   // print that shit
   printBigInt(firstBig);
-  printf("%u\n", firstBig->number->length);
   printBigInt(secondBig);
-  printf("%u\n", secondBig->number->length);
 
-  // compare
-  if(compareBigInt(firstBig, secondBig) < 0) 
-    puts("first < second");
-  else if(compareBigInt(firstBig, secondBig) == 0)
-    puts("they are the same");
-  else
-    puts("first > second");
+  shiftLeftBigInt(firstBig);
+  shiftLeftBigInt(firstBig);
+  shiftLeftBigInt(firstBig);
+
+  printBigInt(firstBig);
+  printf("Length: %d", firstBig->number->length);
   return 0;
 }

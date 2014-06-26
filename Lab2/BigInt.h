@@ -35,6 +35,19 @@ void releaseBigInt(BigInt *bigNum) {
   }
 }
 
+// TO DO: write this
+BigInt* addBigInt(BigInt *first, BigInt *second) {
+  BigInt *newBigInt = allocBigInt(0);
+  /*code*/
+  return newBigInt;
+}
+
+BigInt* shiftLeftBigInt(BigInt *bigNum) {
+  uint *zero = malloc(sizeof(uint));
+  *zero = 0;
+  insertDList(bigNum->number, zero);
+}
+
 int compareBigInt(BigInt *first, BigInt *second) {
   int theOneTrueDigit = 0; // same until proven different
 
