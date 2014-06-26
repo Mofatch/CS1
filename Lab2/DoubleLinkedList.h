@@ -232,7 +232,6 @@ Object removeDList(DoubleLinkedList *list, int position) {
   // length 2+
   else{
     while(navigator) {
-      puts("navigator");
       if(index == position) {
         // collect data
         element = navigator->data;

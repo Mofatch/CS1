@@ -96,13 +96,9 @@ BigInt* addBigInt(BigInt *first, BigInt *second) {
 }
 
 BigInt* shiftLeftBigInt(BigInt *bigNum) {
-  // TO DO: refactor with addBigInt(), then toInt(bigNum) once written
-  BigInt *newBigInt = allocBigInt(0);
-  // add new to bigNum
-  // use allocDigit() here
-  uint *zero = malloc(sizeof(uint));
-  *zero = 0;
-  insertDList(newBigInt->number, zero);
+  // TO DO: refactor with toInt(bigNum) once written
+  BigInt *newBigInt = addBigInt(allocBigInt(0), bigNum);
+  insertDList(newBigInt->number, allocDigit(0));
 
   return newBigInt;
 }
