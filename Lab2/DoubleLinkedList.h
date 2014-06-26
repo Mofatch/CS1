@@ -46,7 +46,6 @@ DoubleLinkedList* allocDList(uint elementSize) {
   return newList;
 }
 
-// TO DO: address dangling pointers
 void releaseDList(DoubleLinkedList *list) {
   DNode *navigator = list->head;
 

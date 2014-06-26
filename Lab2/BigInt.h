@@ -13,6 +13,7 @@ BigInt* allocBigInt(uint smallNumber) {
   BigInt *newBigInt = malloc(sizeof(BigInt));
   newBigInt->number = allocDList(sizeof(smallNumber));
 
+  // add digits
   while(smallNumber > 0) {
     // mod 10 to get next digit from right
     appendDList(newBigInt->number, allocDigit(smallNumber % 10));
@@ -35,24 +36,32 @@ void releaseBigInt(BigInt *bigNum) {
 }
 
 int compareBigInt(BigInt *first, BigInt *second) {
-  int theOneTrueDigit;
-  int i = 0;
+  int theOneTrueDigit = 0; // same until proven different
 
-  // bigger first number
-  if(first->number->length > second->number->length) {
-    theOneTrueDigit = 1;
-  }
-  // bigger second number
-  else if(first->number->length < second->number->length) {
+  // more digits in second number
+  if(first->number->length < second->number->length) {
     theOneTrueDigit = -1;
+  }// more digits in first number
+  else if(first->number->length > second->number->length) {
+    theOneTrueDigit = 1;
   }
   // same number of digits
   else {
-    for(i = 0; i < first->number->length; ++i) {
-      uint firstElement = *(uint *)first->number->data;
-      uint secondElement = *(uint *)second->number->data;
-      // TO DO: write this
-    }
+    DNode *firstElement = first->number->tail;
+    DNode *secondElement = second->number->tail;
+    while(firstElement) {
+      if(*(uint *)firstElement->data > *(uint *)secondElement->data) {
+        theOneTrueDigit = 1;
+        break;
+      }
+      else if(*(uint *)firstElement->data < *(uint *)secondElement->data) {
+        theOneTrueDigit = -1;
+        break;
+      }
+      // down an order of 10
+      firstElement = firstElement->prev;
+      secondElement = secondElement->prev;
+    }      
 
   }
   return theOneTrueDigit;
@@ -62,6 +71,7 @@ void printBigInt(BigInt *bigNum) {
   if(bigNum) {
     if(bigNum->number->length > 0) {
       DNode *navigator = bigNum->number->tail;
+
       while(navigator) {
         printf("%u", *(uint *)navigator->data);
         navigator = navigator->prev;
