@@ -11,7 +11,7 @@
 #include <string.h>
 
 DoubleLinkedList* allocDList(uint elementSize, void (*releaser)(Object), void (*printer)(FILE*, Object)){
-	DoubleLinkedList* list = (DoubleLinkedList*)malloc(sizeof(DoubleLinkedList));
+	DoubleLinkedList* list = (DoubleLinkedList*)calloc(1, sizeof(DoubleLinkedList));
 	list->size = 0;
 	list->elementSize = elementSize;
 	list->releaseFunction = releaser;
@@ -73,8 +73,8 @@ void insertDListElementAt(DoubleLinkedList* list, Object newElement, uint positi
 			iterator = iterator->prev;
 		}
 	}
-	DNode* newNode = (DNode*)malloc(sizeof(DNode));
-	newNode->data = malloc(list->elementSize);
+	DNode* newNode = (DNode*)calloc(1, sizeof(DNode));
+	newNode->data = calloc(1, list->elementSize);
 	memcpy(newNode->data, newElement, list->elementSize);
 	newNode->prev = iterator->prev;
 	newNode->next = iterator;
@@ -137,13 +137,13 @@ Object getElementAtDList(DoubleLinkedList* list, uint position){
 void appendDList(DoubleLinkedList* list, Object newElement){
 	if(!list->head){
 		//list is empty then tail and head will be the newElement
-		list->tail = (DNode*)malloc(sizeof(DNode));
+		list->tail = (DNode*)calloc(1, sizeof(DNode));
 		list->tail->data = malloc(list->elementSize);
 		memcpy(list->tail->data, newElement, list->elementSize);
 		list->head = list->tail;
 	}
 	else{
-		DNode* newNode = (DNode*)malloc(sizeof(DNode));
+		DNode* newNode = (DNode*)calloc(1, sizeof(DNode));
 		newNode->data = malloc(list->elementSize);
 		memcpy(newNode->data, newElement, list->elementSize);
 		list->tail->next = newNode;
@@ -158,7 +158,7 @@ void insertDList(DoubleLinkedList* list, Object newElement){
 		appendDList(list, newElement);
 		return;
 	}
-	DNode* newNode = (DNode*)malloc(sizeof(DNode));
+	DNode* newNode = (DNode*)calloc(1, sizeof(DNode));
 	newNode->data = malloc(list->elementSize);
 	memcpy(newNode->data, newElement, list->elementSize);
 	list->head->prev = newNode;

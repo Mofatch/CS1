@@ -9,7 +9,7 @@
 #include "PriorityQueue.h"
 
 PQueue* allocPQueue(uint elementSize, PQMode mode){
-	PQueue* pq = (PQueue*)malloc(sizeof(PQueue));
+	PQueue* pq = (PQueue*)calloc(1, sizeof(PQueue));
 	pq->elements = allocDList(elementSize, NULL, NULL);
 
 	//the elementSampling is to speed up search time, but it is not yet ready
@@ -58,13 +58,27 @@ void removeMin(PQueue* pq){
 	if(isEmptyPQueue(pq)){
 		return;
 	}
-	removeDList(pq->elements, 0);
+	Object toFree = NULL;
+	toFree = removeDList(pq->elements, 0);
+	if(toFree){
+		//calling release function instead of just free
+		//in case some other data type other than a primitive is
+		//in PQueue
+		pq->elements->releaseFunction(toFree);
+	}
 }
 void removeMax(PQueue* pq){
 	if(isEmptyPQueue(pq)){
 		return;
 	}
-	removeDList(pq->elements, pq->elements->size - 1);
+	Object toFree = NULL;
+	toFree = removeDList(pq->elements, pq->elements->size - 1);
+	if(toFree){
+		//calling release function instead of just free
+		//in case some other data type other than a primitive is
+		//in PQueue
+		pq->elements->releaseFunction(toFree);
+	}
 }
 void add(PQueue* pq, Object obj){
 	if(pq->mode == PQMODE_STACK){
@@ -90,7 +104,6 @@ void add(PQueue* pq, Object obj){
 	pq->priorityExtractor(obj, objHolder);
 	while(current && current->next){
 		pq->priorityExtractor(current->data, currentHolder);
-		int objP = *objHolder;
 		if(*objHolder < *currentHolder){
 			break;
 		}
@@ -159,7 +172,7 @@ Object top(PQueue* pq){
 void pop(PQueue* pq){
 	assert(pq->mode == PQMODE_STACK);
 	globalPriority = isEmptyPQueue(pq) ? 0 : globalPriority + 1;
-	return removeMin(pq);
+	removeMin(pq);
 }
 void push(PQueue* pq, Object obj){
 	assert(pq->mode == PQMODE_STACK);
@@ -175,7 +188,7 @@ Object front(PQueue* pq){
 void dequeue(PQueue* pq){
 	assert(pq->mode == PQMODE_QUEUE);
 	globalPriority = isEmptyPQueue(pq) ? 0 : globalPriority - 1;
-	return removeMin(pq);
+	removeMin(pq);
 }
 void enqueue(PQueue* pq, Object obj){
 	assert(pq->mode == PQMODE_QUEUE);
