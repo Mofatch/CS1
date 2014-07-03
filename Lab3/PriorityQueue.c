@@ -30,6 +30,7 @@ PQueue* allocPQueue(uint elementSize, PQMode mode){
 void releasePQueue(PQueue* pq){
 	if(pq){
 		if(pq->elements){
+			puts("thar be elements.");
 			releaseDList(pq->elements);
 		}
 		if(pq->elementSampling){

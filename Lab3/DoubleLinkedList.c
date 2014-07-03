@@ -16,6 +16,8 @@ DoubleLinkedList* allocDList(uint elementSize, void (*releaser)(Object), void (*
 	list->elementSize = elementSize;
 	list->releaseFunction = releaser;
 	list->printerFunction = printer;
+	list->head = NULL;
+	list->tail = NULL;
 	return list;
 }
 
@@ -24,6 +26,7 @@ void releaseDNode(DNode* node, void (*releaseData)(Object)){
 	if(node){
 		if(node->data){
 			//ideally this should be a release function
+			puts("releasing data");
 			releaseData(node->data);
 		}
 		if(node->next){

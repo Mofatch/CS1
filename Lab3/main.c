@@ -24,41 +24,29 @@ int main(int argc, char *argv[]) {
 int postfix(int numArguments, char **argList) {
   // initialize a stack
   PQMode myMode = PQMODE_STACK;
-  PQueue *myStack = allocPQueue(sizeof(int), myMode);int i;
+  PQueue *myStack = allocPQueue(sizeof(int), myMode);
+  int i;
   int result, first, second;
 
   // go through the list, collecting arguments
   for(i = 1; i < numArguments; ++i) {
-    puts("whee!");
     switch(*argList[i]) {
       case '+':
-        puts("+ case");
-        puts("assigning first");
         first = *(int *)top(myStack);
-        puts("popping first");
         pop(myStack);
-        puts("assigning second");
         second = *(int *)top(myStack);
-        puts("popping second");
         pop(myStack);
-        puts("pushing sum to stack");
         push(myStack, allocIntWith(first + second));      
-        puts("breaking");
         break;
       default:
-        puts("adding...");
         add(myStack, allocIntWith(atoi(argList[i])));
         printf("%d\n", *(int *)top(myStack));
-        puts("done adding...");
     }
   }
   // assign result a copy of top(), release the stack
-  puts("assigning...");
   result = *(int *)top(myStack);
   printf("%d\n", result);
-  puts("releasing...");
   releasePQueue(myStack);
 
-  puts("returning...");
   return result;
 }
