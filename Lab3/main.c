@@ -11,8 +11,8 @@ int main(int argc, char *argv[]) {
   if(argc > 1) {
     for(count = 1; count < argc; count++) {
       printf("argv[%d] = %s\n", count, argv[count]);
-      printf("Result: %d", postfix(argc, argv));
     }
+      printf("Result: %d", postfix(argc, argv));
   }
   else {
     printf("The command had no arguments.\n");
