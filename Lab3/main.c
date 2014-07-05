@@ -55,6 +55,14 @@ int postfix(int numArguments, char **argList) {
         push(myStack, allocIntWith(lower * higher));
         printf("Top: %d\n", *(int *)top(myStack));
         break;
+      case '/':
+        higher = *(int *)top(myStack);
+        pop(myStack);
+        lower = *(int *)top(myStack);
+        pop(myStack);
+        push(myStack, allocIntWith(lower / higher));
+        printf("Top: %d\n", *(int *)top(myStack));
+        break;
       default:
         add(myStack, allocIntWith(atoi(argList[i])));
         printf("Top: %d\n", *(int *)top(myStack));
