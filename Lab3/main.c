@@ -38,6 +38,12 @@ int postfix(int numArguments, char **argList) {
         pop(myStack);
         push(myStack, allocIntWith(first + second));      
         break;
+      case '-':
+        first = *(int *)top(myStack);
+        pop(myStack);
+        second = *(int *)top(myStack);
+        pop(myStack);
+        push(myStack, allocIntWith(first - second));
       default:
         add(myStack, allocIntWith(atoi(argList[i])));
         printf("%d\n", *(int *)top(myStack));
@@ -45,7 +51,6 @@ int postfix(int numArguments, char **argList) {
   }
   // assign result a copy of top(), release the stack
   result = *(int *)top(myStack);
-  printf("%d\n", result);
   releasePQueue(myStack);
 
   return result;
