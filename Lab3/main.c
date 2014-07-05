@@ -26,27 +26,38 @@ int postfix(int numArguments, char **argList) {
   PQMode myMode = PQMODE_STACK;
   PQueue *myStack = allocPQueue(sizeof(int), myMode);
   int i;
-  int result, first, second;
+  int result, higher, lower;
 
   // go through the list, collecting arguments
   for(i = 1; i < numArguments; ++i) {
     switch(*argList[i]) {
       case '+':
-        first = *(int *)top(myStack);
+        higher = *(int *)top(myStack);
         pop(myStack);
-        second = *(int *)top(myStack);
+        lower = *(int *)top(myStack);
         pop(myStack);
-        push(myStack, allocIntWith(first + second));      
+        push(myStack, allocIntWith(lower + higher));      
+        printf("Top: %d\n", *(int *)top(myStack));
         break;
       case '-':
-        first = *(int *)top(myStack);
+        higher = *(int *)top(myStack);
         pop(myStack);
-        second = *(int *)top(myStack);
+        lower = *(int *)top(myStack);
         pop(myStack);
-        push(myStack, allocIntWith(first - second));
+        push(myStack, allocIntWith(lower - higher));
+        printf("Top: %d\n", *(int *)top(myStack));
+        break;
+      case '*':
+        higher = *(int *)top(myStack);
+        pop(myStack);
+        lower = *(int *)top(myStack);
+        pop(myStack);
+        push(myStack, allocIntWith(lower * higher));
+        printf("Top: %d\n", *(int *)top(myStack));
+        break;
       default:
         add(myStack, allocIntWith(atoi(argList[i])));
-        printf("%d\n", *(int *)top(myStack));
+        printf("Top: %d\n", *(int *)top(myStack));
     }
   }
   // assign result a copy of top(), release the stack
