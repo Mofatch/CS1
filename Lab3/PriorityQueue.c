@@ -10,7 +10,9 @@
 
 PQueue* allocPQueue(uint elementSize, PQMode mode){
 	PQueue* pq = (PQueue*)calloc(1, sizeof(PQueue));
-	pq->elements = allocDList(elementSize, NULL, NULL);
+	void (*releaseFunction)(Object);
+	releaseFunction = releaser;
+	pq->elements = allocDList(elementSize, releaseFunction, NULL);
 
 	//the elementSampling is to speed up search time, but it is not yet ready
 	//in order for it to work I cannot make a copy of DNode*, rather I should
@@ -30,7 +32,6 @@ PQueue* allocPQueue(uint elementSize, PQMode mode){
 void releasePQueue(PQueue* pq){
 	if(pq){
 		if(pq->elements){
-			puts("thar be elements.");
 			releaseDList(pq->elements);
 		}
 		if(pq->elementSampling){
@@ -38,6 +39,9 @@ void releasePQueue(PQueue* pq){
 		}
 		free(pq);
 	}
+}
+void releaser(Object data) {
+	free(data);
 }
 Object peekMin(PQueue* pq){
 	if(isEmptyPQueue(pq)){

@@ -37,7 +37,6 @@ void breakEvenDList(DoubleLinkedList* list, DoubleLinkedList** lower, DoubleLink
 Object removeDList(DoubleLinkedList* list, uint position);
 void printDList(FILE*, DoubleLinkedList*);
 void debugDList(FILE*, DoubleLinkedList*);
-
 //tester function to be used in main, receives the same parameters as main
 int testDList(int argc, char** argv);
 
