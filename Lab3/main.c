@@ -6,13 +6,8 @@
   and pop() conventions.
 */
 
-// TO DO: Check about negative-valued integers used in postfix
 #include <stdio.h>
-#include <math.h>
-#include "PriorityQueue.c"
-#include "Objects.c"
-#include "DArray.c"
-#include "DoubleLinkedList.c"
+#include "postfix.c"
 
 int main(int argc, char *argv[]) {
   int count;
@@ -26,68 +21,4 @@ int main(int argc, char *argv[]) {
   }
   
   return 0;
-}
-
-int postfix(int numArguments, char **argList) {
-  // initialize a stack
-  PQMode myMode = PQMODE_STACK;
-  PQueue *myStack = allocPQueue(sizeof(int), myMode);
-  int i;
-  int result, higher, lower, element;
-
-  // go through the list, collecting arguments
-  for(i = 1; i < numArguments; ++i) {
-    switch(*argList[i]) {
-      case '+':
-        higher = *(int *)top(myStack);
-        pop(myStack);
-        lower = *(int *)top(myStack);
-        pop(myStack);
-        push(myStack, allocIntWith(lower + higher));      
-        break;
-      case '-':
-        higher = *(int *)top(myStack);
-        pop(myStack);
-        lower = *(int *)top(myStack);
-        pop(myStack);
-        push(myStack, allocIntWith(lower - higher));
-        break;
-      case '*':
-        higher = *(int *)top(myStack);
-        pop(myStack);
-        lower = *(int *)top(myStack);
-        pop(myStack);
-        push(myStack, allocIntWith(lower * higher));
-        break;
-      case '/':
-        higher = *(int *)top(myStack);
-        pop(myStack);
-        lower = *(int *)top(myStack);
-        pop(myStack);
-        push(myStack, allocIntWith(lower / higher));
-        break;
-      case '%':
-        higher = *(int *)top(myStack);
-        pop(myStack);
-        lower = *(int *)top(myStack);
-        pop(myStack);
-        push(myStack, allocIntWith(lower % higher));
-        break;
-      case '^':
-        higher = *(int *)top(myStack);
-        pop(myStack);
-        lower = *(int *)top(myStack);
-        pop(myStack);
-        element = (higher < 1) ? 0 : pow(lower, higher);
-        push(myStack, allocIntWith(element));
-        break;
-      default:
-        add(myStack, allocIntWith(atoi(argList[i])));
-    }
-  }
-  // assign result a copy of top(), release the stack
-  result = *(int *)top(myStack);
-  releasePQueue(myStack);
-
-  return result;
 }

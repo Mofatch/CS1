@@ -11,11 +11,11 @@
 #define DEBUG 0
 
 #include "Objects.h"
-#include<stdio.h>
-#include<stdlib.h>
-#include<limits.h>
-#include<stdbool.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <stdbool.h>
+#include <string.h>
 
 typedef struct DArray{
 	GenericArray data;
