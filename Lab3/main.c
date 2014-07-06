@@ -1,3 +1,11 @@
+/*Authors: Trevor Minnix/Travis Bashor
+  Class: COP3502C, Summer C 2014
+  Postfix Function: This function is written to implement
+  postfix notation for arithmetic operations. A stack is
+  used to manage values and operators call for use of push()
+  and pop() conventions.
+*/
+
 #include <stdio.h>
 #include <math.h>
 #include "PriorityQueue.c"
@@ -7,13 +15,10 @@
 
 int main(int argc, char *argv[]) {
   int count;
-  printf("This program was called with \"%s\".\n",argv[0]);
 
   if(argc > 1) {
-    for(count = 1; count < argc; count++) {
-      printf("argv[%d] = %s\n", count, argv[count]);
-    }
-      printf("Result: %d", postfix(argc, argv));
+    puts("**Postfix Test**");
+    printf("Result: %d\n", postfix(argc, argv));
   }
   else {
     printf("The command had no arguments.\n");
@@ -38,7 +43,6 @@ int postfix(int numArguments, char **argList) {
         lower = *(int *)top(myStack);
         pop(myStack);
         push(myStack, allocIntWith(lower + higher));      
-        printf("Top: %d\n", *(int *)top(myStack));
         break;
       case '-':
         higher = *(int *)top(myStack);
@@ -46,7 +50,6 @@ int postfix(int numArguments, char **argList) {
         lower = *(int *)top(myStack);
         pop(myStack);
         push(myStack, allocIntWith(lower - higher));
-        printf("Top: %d\n", *(int *)top(myStack));
         break;
       case '*':
         higher = *(int *)top(myStack);
@@ -54,7 +57,6 @@ int postfix(int numArguments, char **argList) {
         lower = *(int *)top(myStack);
         pop(myStack);
         push(myStack, allocIntWith(lower * higher));
-        printf("Top: %d\n", *(int *)top(myStack));
         break;
       case '/':
         higher = *(int *)top(myStack);
@@ -62,7 +64,6 @@ int postfix(int numArguments, char **argList) {
         lower = *(int *)top(myStack);
         pop(myStack);
         push(myStack, allocIntWith(lower / higher));
-        printf("Top: %d\n", *(int *)top(myStack));
         break;
       case '%':
         higher = *(int *)top(myStack);
@@ -70,7 +71,6 @@ int postfix(int numArguments, char **argList) {
         lower = *(int *)top(myStack);
         pop(myStack);
         push(myStack, allocIntWith(lower % higher));
-        printf("Top: %d\n", *(int *)top(myStack));
         break;
       case '^':
         higher = *(int *)top(myStack);
@@ -79,11 +79,9 @@ int postfix(int numArguments, char **argList) {
         pop(myStack);
         element = (higher < 1) ? 0 : pow(lower, higher);
         push(myStack, allocIntWith(element));
-        printf("Top: %d\n", *(int *)top(myStack));
         break;
       default:
         add(myStack, allocIntWith(atoi(argList[i])));
-        printf("Top: %d\n", *(int *)top(myStack));
     }
   }
   // assign result a copy of top(), release the stack
