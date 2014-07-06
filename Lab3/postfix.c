@@ -1,4 +1,5 @@
 // TO DO: Check about negative-valued integers used in postfix
+// TO DO: screenshots
 #include <math.h>
 #include "postfix.h"
 #include "PriorityQueue.c"
@@ -70,7 +71,7 @@ int postfix(int numArguments, char **argList) {
         add(myStack, allocIntWith(atoi(argList[i])));
     }
   }
-  // assign result a copy of top(), release the stack
+  // assign result a copy of top(), then release the stack
   result = *(int *)top(myStack);
   releasePQueue(myStack);
 
