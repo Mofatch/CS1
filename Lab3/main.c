@@ -6,6 +6,7 @@
   and pop() conventions.
 */
 
+// TO DO: Check about negative-valued integers used in postfix
 #include <stdio.h>
 #include <math.h>
 #include "PriorityQueue.c"
