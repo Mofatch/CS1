@@ -11,8 +11,7 @@ int postfix(int numArguments, char **argList) {
   // initialize a stack
   PQMode myMode = PQMODE_STACK;
   PQueue *myStack = allocPQueue(sizeof(int), myMode);
-  int i;
-  int result, higher, lower, element;
+  int i, result, higher, lower, element;
 
   // go through the list, collecting arguments
   for(i = 1; i < numArguments; ++i) {
