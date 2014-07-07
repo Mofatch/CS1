@@ -8,21 +8,9 @@
 #include "DoubleLinkedList.c"
 
 int main(int argc, char **argv) {
-  // create a file pointer
-  FILE *ifp;
-  int numEntries, score, i;
-
-  // open input.txt
-  ifp = fopen("input.txt","r");
-
-  // find the number of entries in the file
-  fscanf(ifp, "%d", &numEntries);
-
-  for(i = 1; i <= numEntries; ++i) {
-    fscanf(ifp, "%d", &score);
-    printf("Score %d: %d\n", i, score);
-  }
-
-  // close input.txt
-  fclose(ifp);
+  printf("Number of Arguments: %d\n", argc);
+  printf("%s\n", argv[0]); 
+  if(argc > 1) 
+    srand(atoi(argv[1]));
+    
 }
