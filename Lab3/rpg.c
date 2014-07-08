@@ -49,7 +49,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
     // hit
     printf("Hit! ");
     printf("%d has %d hp and %d has %d hp.", gs->id, gs->hp, 
-                                     target->id, target->hp)
+                                     target->id, target->hp);
     return true;
   }
   // miss
@@ -70,21 +70,23 @@ void resetActionQueue(GameSprite* gs) {
   
   for(i = 1; i <= numFalse; ++i) {
     // add falses first
-    enqueue(allocBoolWith(false));
+    enqueue(gs->actions, allocBoolWith(false));
   }
 
   // last element is true
   if(i <= 10) {
-    enqueue(allocBoolWith(true));
+    enqueue(gs->actions, allocBoolWith(true));
   }
 }
 
 // used for calculating total hp of ally or enemy team
 int sumHealth(ArrayList *list) {
+  GameSprite *currentGS;
   int i, totalHP;
   if(list) {
     for(i = 0; i < list->length; ++i) {
-      totalHP += list->data[i]->hp;
+      currentGS = (GameSprite *)list->data[i];
+      totalHP += currentGS->hp;
     }
   }
 
@@ -141,7 +143,11 @@ void setAccuracy(GameSprite* gs, uint ac) {
 void runBattle(FILE *configuration) {
   ArrayList *allies = allocDArray(10, sizeof(GameSprite));
   ArrayList *enemies = allocDArray(10, sizeof(GameSprite));
-  uint i, data, turnCounter;
+  GameSprite *thisSprite;
+  GameSprite *thisAlly;
+  GameSprite *thisEnemy;
+  bool action;
+  uint i, input, turnCounter;
   char type;
 
   // make a character with the input stats
@@ -150,8 +156,8 @@ void runBattle(FILE *configuration) {
       switch(i) {
         // id
         case 1:
-          fscanf(configuration, "%d", &data);
-          GameSprite *thisSprite = allocGameSprite(data);
+          fscanf(configuration, "%d", &input);
+          thisSprite = allocGameSprite(input);
           break;
         // type
         case 2:
@@ -171,27 +177,28 @@ void runBattle(FILE *configuration) {
           break;
         // speed
         case 3:
-          fscanf(configuration, "%d", &data);
-          setSpeed(thisSprite, data);
+          fscanf(configuration, "%d", &input);
+          setSpeed(thisSprite, input);
+          resetActionQueue(thisSprite);
           break;
         // hp
         case 4:
-          fscanf(configuration, "%d", &data);
-          setHP(thisSprite, data);
+          fscanf(configuration, "%d", &input);
+          setHP(thisSprite, input);
           break;
         // strength
         case 5:
-          fscanf(configuration, "%d", &data);
-          setStrength(thisSprite, data);
+          fscanf(configuration, "%d", &input);
+          setStrength(thisSprite, input);
           break;
         // accuracy
         case 6:
-          fscanf(configuration, "%d", &data);
-          setAccuracy(thisSprite, data);
+          fscanf(configuration, "%d", &input);
+          setAccuracy(thisSprite, input);
           break;
-      }
-    }
-  }
+      } // end switch
+    } // end for
+  } // end while
   fclose(configuration);
   
   // at the end of the game, report how many turns there were
@@ -201,26 +208,29 @@ void runBattle(FILE *configuration) {
 
     // check for action on allies side
     for(i = 0; i < allies->length; ++i) {
-      if(*(bool *)front(allies[i]->actions) == true) {
-        actionProcess(allies[i], allies, enemies);
-        resetActionQueue(allies[i]);
+      thisAlly = (GameSprite *)getDArray(allies, i);
+      action = (bool *)front(thisAlly->actions);
+      if(action == true) {
+        actionProcess(getDArray(allies, i), allies, enemies);
+        resetActionQueue(getDArray(allies, i));
       }
       else {
-        dequeue(allies[i]);
+        dequeue(thisAlly->actions);
       }
     }
 
     // check for action on enemy side
     for(i = 0; i < enemies->length; ++i) {
-      if(*(bool *)front(enemies[i]->actions) == true) {
-        actionProcess(enemies[i], enemies, enemies);
-        resetActionQueue(enemies[i]);
+      thisEnemy = (GameSprite *)getDArray(enemies, i);
+      action = (bool *)front(thisEnemy->actions); 
+      if(action == true) {
+        actionProcess(getDArray(enemies, i), allies, enemies);
+        resetActionQueue(getDArray(enemies, i));
       }
       else {
-        dequeue(enemies[i]);
+        dequeue(thisEnemy->actions);
       }
     }
       
   } while(checkOutcome(allies, enemies) == 0);
-
 }
