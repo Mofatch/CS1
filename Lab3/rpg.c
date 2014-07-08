@@ -24,11 +24,21 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
     switch(gs->type) {
       case ENEMY:
         // get a random ally and reduce its hp
-        target->hp -= gs->strength;
+        if(gs->strength > target->hp) {
+          target->hp -= gs->strength;
+        }
+        else {
+          target->hp = 0;
+        }
         break;
       case FIGHTER:
         // get a random enemy and reduce its hp
-        target->hp -= gs->strength;
+        if(gs->strength > target->hp) {
+          target->hp -= gs->strength;
+        }
+        else {
+          target->hp = 0;
+        }
         break;
       case HEALER:
         // heal random ally
@@ -36,7 +46,9 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
         break;
     }
     // hit
-    printf("Hit!\n");
+    printf("Hit! ");
+    printf("%d has %d hp and %d has %d hp.", gs->id, gs->hp, 
+                                     target->id, target->hp)
     return true;
   }
   // miss
