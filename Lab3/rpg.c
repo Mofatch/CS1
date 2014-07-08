@@ -79,11 +79,6 @@ void resetActionQueue(GameSprite* gs) {
   }
 }
 
-// determine if the battle is over or not
-int checkOutcome(ArrayList* players, ArrayList* enemies) {
-
-}
-
 // used for calculating total hp of ally or enemy team
 int sumHealth(ArrayList *list) {
   int i, totalHP;
@@ -94,4 +89,17 @@ int sumHealth(ArrayList *list) {
   }
 
   return totalHP;
+}
+
+// determine if the battle is over or not
+int checkOutcome(ArrayList* players, ArrayList* enemies) {
+  if(sumHealth(players) == 0) {
+    return 1;
+  }
+  else if(sumHealth(enemies) == 0) {
+    return -1;
+  }
+  else {
+    return 0;
+  }
 }
