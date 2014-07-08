@@ -10,17 +10,17 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   if(gs->type == ENEMY) {
     pos = rand() % players->length;
     target = (GameSprite *)getDArray(players, pos);
-    printf("%d attacks %d! ", gs->id, target->id);
+    printf("%d attacks %d!\n", gs->id, target->id);
   }
   else if(gs->type == FIGHTER) {
     pos = rand() % enemies->length;
     target = (GameSprite *)getDArray(enemies, pos);
-    printf("%d attacks %d! ", gs->id, target->id);
+    printf("%d attacks %d!\n", gs->id, target->id);
   }
   else if(gs->type == HEALER) {
     pos = rand() % players->length;
     target = (GameSprite *)getDArray(players, pos);
-    printf("%d attempts to heal %d! ", gs->id, target->id);
+    printf("%d attempts to heal %d!\n", gs->id, target->id);
   }
   // random number in [0,100]
   roll = rand() % 101;
@@ -154,6 +154,21 @@ void setAccuracy(GameSprite* gs, uint ac) {
   gs->accuracy = ac;
 }
 
+int countAlive(ArrayList *group) {
+  GameSprite *thisSprite;
+  int i, numAlive = 0;
+
+  // go through the list, looking for live members
+  for(i = 0; i < group->length; ++i) {
+    thisSprite = (GameSprite *)getDArray(group, i);
+    if(thisSprite->hp > 0) {
+      numAlive++;
+    }
+  }
+
+  return numAlive;
+}
+
 // run a battle sequence
 void runBattle(FILE *configuration) {
   ArrayList *allies = allocDArray(10, sizeof(GameSprite));
@@ -225,33 +240,46 @@ void runBattle(FILE *configuration) {
   do {
     // next turn
     turnCounter++;
-
+    printf("\n**Turn %d**\n", turnCounter);
+    printf("Live players: %d, Live enemies: %d\n\n", countAlive(allies), countAlive(enemies));
     // check for action on allies side
     for(i = 0; i < allies->length; ++i) {
       thisAlly = (GameSprite *)getDArray(allies, i);
-      action = (bool *)front(thisAlly->actions);
-      if(action == true) {
-        actionProcess(getDArray(allies, i), allies, enemies);
-        resetActionQueue(getDArray(allies, i));
-      }
-      else {
-        dequeue(thisAlly->actions);
+      // only proceed if this ally is alive
+      if(thisAlly->hp > 0) {
+        action = (bool *)front(thisAlly->actions);
+        if(action == true) {
+          actionProcess(getDArray(allies, i), allies, enemies);
+          resetActionQueue(getDArray(allies, i));
+        }
+        else {
+          dequeue(thisAlly->actions);
+        }
       }
     }
 
     // check for action on enemy side
     for(i = 0; i < enemies->length; ++i) {
       thisEnemy = (GameSprite *)getDArray(enemies, i);
-      action = (bool *)front(thisEnemy->actions); 
-      if(action == true) {
-        actionProcess(getDArray(enemies, i), allies, enemies);
-        resetActionQueue(getDArray(enemies, i));
-      }
-      else {
-        dequeue(thisEnemy->actions);
+
+      // only proceed if this ally is alive
+      if(thisEnemy->hp > 0) {
+        action = (bool *)front(thisEnemy->actions); 
+        if(action == true) {
+          actionProcess(getDArray(enemies, i), allies, enemies);
+          resetActionQueue(getDArray(enemies, i));
+        }
+        else {
+          dequeue(thisEnemy->actions);
+        }
       }
     }
 
   } while(checkOutcome(allies, enemies) == 0);
-  printf("\nGame ended in %d turns.\n", turnCounter);
+  if(sumHealth(allies) == 0) {
+    printf("\nBattle lost in %d turns!\n", turnCounter);
+  }
+  else {
+    printf("\nBattle won in %d turns!\n", turnCounter);
+  }
 }
