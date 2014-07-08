@@ -141,34 +141,56 @@ void setAccuracy(GameSprite* gs, uint ac) {
 void runBattle(FILE *configuration) {
   ArrayList *allies = allocDArray(10, sizeof(GameSprite));
   ArrayList *enemies = allocDArray(10, sizeof(GameSprite));
-  uint i, idNum, turnCounter;
+  uint i, data, turnCounter;
+  char type;
 
   // make a character with the input stats
-  while(configuration) {
+  while(!feof(configuration)) {
     for(i = 0; i < 6; ++i) {
       switch(i) {
+        // id
         case 1:
-          fscanf(configuration, "%d", &idNum);
-          GameSprite *thisSprite = allocGameSprite(idNum);
+          fscanf(configuration, "%d", &data);
+          GameSprite *thisSprite = allocGameSprite(data);
           break;
+        // type
         case 2:
-          // type
+          fscanf(configuration, "%c", &type);
+          if(type == 'E') {
+            setType(thisSprite, ENEMY);
+            appendDArray(enemies, thisSprite);
+          }
+          else if (type == 'H') {
+            setType(thisSprite, HEALER);
+            appendDArray(allies, thisSprite);
+          }
+          else if (type == 'F') {
+            setType(thisSprite, FIGHTER);
+            appendDArray(allies, thisSprite);
+          }
           break;
+        // speed
         case 3:
-          // speed
+          fscanf(configuration, "%d", &data);
+          setSpeed(thisSprite, data);
           break;
+        // hp
         case 4:
-          // hp
+          fscanf(configuration, "%d", &data);
+          setHP(thisSprite, data);
           break;
+        // strength
         case 5:
-          // strength
+          fscanf(configuration, "%d", &data);
+          setStrength(thisSprite, data);
           break;
+        // accuracy
         case 6:
-          // accuracy
+          fscanf(configuration, "%d", &data);
+          setAccuracy(thisSprite, data);
           break;
       }
     }
-    // append the allies or enemies array, depending on the type
   }
   fclose(configuration);
   
