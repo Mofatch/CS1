@@ -57,6 +57,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   return false;
 }
 
+// using speed, ready this character for another battle
 void resetActionQueue(GameSprite* gs) {
   int i, numFalse;
   // clear the list
@@ -76,4 +77,13 @@ void resetActionQueue(GameSprite* gs) {
   if(i <= 10) {
     enqueue(allocBoolWith(true));
   }
+}
+
+// determine if the battle is over or not
+int checkOutcome(ArrayList* players, ArrayList* enemies) {
+
+}
+
+int sumHealth(ArrayList *list) {
+  int sum;
 }
