@@ -194,11 +194,33 @@ void runBattle(FILE *configuration) {
   }
   fclose(configuration);
   
-  /* once the lists are built, run the game as long as
-   checkOutcome() returns 0 */
   // at the end of the game, report how many turns there were
   do {
-    // check the action queues for 'true'
-    // if an action occurs, reset that characters action queue
+    // next turn
+    turnCounter++;
+
+    // check for action on allies side
+    for(i = 0; i < allies->length; ++i) {
+      if(*(bool *)front(allies[i]->actions) == true) {
+        actionProcess(allies[i], allies, enemies);
+        resetActionQueue(allies[i]);
+      }
+      else {
+        dequeue(allies[i]);
+      }
+    }
+
+    // check for action on enemy side
+    for(i = 0; i < enemies->length; ++i) {
+      if(*(bool *)front(enemies[i]->actions) == true) {
+        actionProcess(enemies[i], enemies, enemies);
+        resetActionQueue(enemies[i]);
+      }
+      else {
+        dequeue(enemies[i]);
+      }
+    }
+      
   } while(checkOutcome(allies, enemies) == 0);
+
 }
