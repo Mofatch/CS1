@@ -84,6 +84,14 @@ int checkOutcome(ArrayList* players, ArrayList* enemies) {
 
 }
 
+// used for calculating total hp of ally or enemy team
 int sumHealth(ArrayList *list) {
-  int sum;
+  int i, totalHP;
+  if(list) {
+    for(i = 0; i < list->length; ++i) {
+      totalHP += list->data[i]->hp;
+    }
+  }
+
+  return totalHP;
 }
