@@ -23,5 +23,11 @@ bool actionProcess(GameSprite*, ArrayList*, ArrayList*);
 void resetActionQueue(GameSprite*);
 void runBattle(FILE*);
 int checkOutcome(ArrayList*, ArrayList*);
+GameSprite* allocGameSprite(uint);
+void setType(GameSprite*, SType);
+void setSpeed(GameSprite*, uint);
+void setHP(GameSprite*, uint);
+void setStrength(GameSprite*, uint);
+void setAccuracy(GameSprite*, uint);
 
 #endif /* RPG_H_ */

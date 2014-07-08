@@ -8,11 +8,14 @@
 #include "rpg.c"
 
 int main(int argc, char **argv) {
+  // could be argv[1]
+  FILE *ifp = fopen(argv[1],"r");
   printf("Number of Arguments: %d\n", argc);
-  printf("%s\n", argv[0]); 
+  printf("%s\n", argv[1]); 
 
-  if(argc > 1) 
-    srand(atoi(argv[1]));
-  // run a game
-    
+  // if there was a number entered, seed rand() with it
+  if(argc > 2) 
+    srand(atoi(argv[2]));
+
+  runBattle(ifp);
 }

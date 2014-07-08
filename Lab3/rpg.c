@@ -103,3 +103,80 @@ int checkOutcome(ArrayList* players, ArrayList* enemies) {
     return 0;
   }
 }
+
+// allocate memory for a new character
+GameSprite* allocGameSprite(uint idNum) {
+  GameSprite *newGameSprite = malloc(sizeof(GameSprite));
+  newGameSprite->id = idNum;
+
+  return newGameSprite;
+}
+
+// set healer, fighter, or enemy
+void setType(GameSprite* gs, SType t) {
+  gs->type = t;
+}
+
+// set character speed
+void setSpeed(GameSprite* gs, uint spd) {
+  gs->speed = spd;
+}
+
+// set character hp
+void setHP(GameSprite* gs, uint health) {
+  gs->hp = health;
+}
+
+// set charcter strength
+void setStrength(GameSprite* gs, uint str) {
+  gs->strength = str;
+}
+
+// set character accuracy
+void setAccuracy(GameSprite* gs, uint ac) {
+  gs->accuracy = ac;
+}
+
+// run a battle sequence
+void runBattle(FILE *configuration) {
+  ArrayList *allies = allocDArray(10, sizeof(GameSprite));
+  ArrayList *enemies = allocDArray(10, sizeof(GameSprite));
+  uint i, idNum, turnCounter;
+
+  // make a character with the input stats
+  while(configuration) {
+    for(i = 0; i < 6; ++i) {
+      switch(i) {
+        case 1:
+          fscanf(configuration, "%d", &idNum);
+          GameSprite *thisSprite = allocGameSprite(idNum);
+          break;
+        case 2:
+          // type
+          break;
+        case 3:
+          // speed
+          break;
+        case 4:
+          // hp
+          break;
+        case 5:
+          // strength
+          break;
+        case 6:
+          // accuracy
+          break;
+      }
+    }
+    // append the allies or enemies array, depending on the type
+  }
+  fclose(configuration);
+  
+  /* once the lists are built, run the game as long as
+   checkOutcome() returns 0 */
+  // at the end of the game, report how many turns there were
+  do {
+    // check the action queues for 'true'
+    // if an action occurs, reset that characters action queue
+  } while(checkOutcome(allies, enemies) == 0);
+}
