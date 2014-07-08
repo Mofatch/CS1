@@ -58,9 +58,22 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
 }
 
 void resetActionQueue(GameSprite* gs) {
-  int i;
+  int i, numFalse;
+  // clear the list
+  while(!isEmptyPQueue(gs->actions)) {
+    dequeue(gs->actions);
+  }
 
-  for(i = 1; gs->speed; ++i) {
-    
+  // rebuild the list
+  numFalse = 10 - gs->speed;
+  
+  for(i = 1; i <= numFalse; ++i) {
+    // add falses first
+    enqueue(allocBoolWith(false));
+  }
+
+  // last element is true
+  if(i <= 10) {
+    enqueue(allocBoolWith(true));
   }
 }
