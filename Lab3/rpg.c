@@ -1,5 +1,6 @@
 #include "rpg.h"
 
+// using player/enemy info, run an action phase (attack or heal)
 bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   // target of action
   GameSprite *target;
@@ -54,4 +55,12 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   // miss
   printf("Miss!\n");
   return false;
+}
+
+void resetActionQueue(GameSprite* gs) {
+  int i;
+
+  for(i = 1; gs->speed; ++i) {
+    
+  }
 }

@@ -1,6 +1,8 @@
 // TO DO: Check about negative-valued integers used in postfix
 // TO DO: screenshots
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "postfix.h"
 #include "PriorityQueue.c"
 #include "Objects.c"
@@ -11,6 +13,7 @@ int postfix(int numArguments, char **argList) {
   // initialize a stack
   PQMode myMode = PQMODE_STACK;
   PQueue *myStack = allocPQueue(sizeof(int), myMode);
+  setReleasePQueue(myStack, releasePrimitive);
   int i, result, higher, lower, element;
 
   // go through the list, collecting arguments
