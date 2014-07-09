@@ -10,6 +10,12 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   if(gs->type == ENEMY) {
     // find a live target
     do {
+      if(target) {
+        // release previous memory if it contained a dead GameSprite
+        if(target->hp == 0) {
+          releaseGameSprite(target);
+        }
+      }
       pos = rand() % players->length;
       target = (GameSprite *)getDArray(players, pos);
     } while(target->hp == 0);
@@ -19,8 +25,14 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   else if(gs->type == FIGHTER) {
     // find a live target
     do {
-    pos = rand() % enemies->length;
-    target = (GameSprite *)getDArray(enemies, pos);
+      if(target) {
+        // release previous memory if it contained a dead GameSprite
+        if(target->hp == 0) {
+          releaseGameSprite(target);
+        }
+      }
+      pos = rand() % enemies->length;
+      target = (GameSprite *)getDArray(enemies, pos);
     } while(target->hp == 0);
     printf("%d attacks %d!\n", gs->id, target->id);
   }
@@ -28,6 +40,12 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   else if(gs->type == HEALER) {
     // find a live target
     do {
+      if(target) {
+        // release previous memory if it contained a dead GameSprite
+        if(target->hp == 0) {
+          releaseGameSprite(target);
+        }
+      }
       pos = rand() % players->length;
       target = (GameSprite *)getDArray(players, pos);
     } while(target->hp == 0);
@@ -76,6 +94,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
     printf("%d has %d hp and %d has %d hp.\n", gs->id, gs->hp, 
                                      target->id, target->hp);
 
+    releaseGameSprite(target);
     return true;
   }
   printf("Miss!\n\n");
@@ -118,6 +137,7 @@ int sumHealth(ArrayList *list) {
     }
   }
 
+  releaseGameSprite(currentGS);
   return totalHP;
 }
 
@@ -145,6 +165,14 @@ GameSprite* allocGameSprite(uint idNum) {
   return newGameSprite;
 }
 
+void releaseGameSprite(GameSprite* gs) {
+  printf("Releasing %d\n", gs->id);
+  if(gs->actions) {
+    releasePQueue(gs->actions);
+  }
+  free(gs);
+}
+
 // set HEALER, FIGHTER, or ENEMY
 void setType(GameSprite* gs, SType t) {
   gs->type = t;
@@ -170,6 +198,7 @@ void setAccuracy(GameSprite* gs, uint ac) {
   gs->accuracy = ac;
 }
 
+// count number of living members is group
 int countAlive(ArrayList *group) {
   GameSprite *thisSprite;
   int i, numAlive = 0;
@@ -181,6 +210,7 @@ int countAlive(ArrayList *group) {
       numAlive++;
     }
   }
+
 
   return numAlive;
 }
@@ -204,12 +234,16 @@ void runBattle(FILE *configuration) {
         case 0:
           fscanf(configuration, "%d", &input);
           thisSprite = allocGameSprite(input);
+          printf("%d ", input);
           thisSprite->actions = allocPQueue(sizeof(bool), PQMODE_QUEUE);
           setReleasePQueue(thisSprite->actions, releasePrimitive);
           break;
         // type
         case 1:
+          // double scan for space
           fscanf(configuration, "%c", &type);
+          fscanf(configuration, "%c", &type);
+          printf("%c ", type);
           if(type == 'E') {
             setType(thisSprite, ENEMY);
           }
@@ -223,26 +257,32 @@ void runBattle(FILE *configuration) {
         // speed
         case 2:
           fscanf(configuration, "%d", &input);
+          printf("%d ", input);
           setSpeed(thisSprite, input);
           resetActionQueue(thisSprite);
           break;
         // hp
         case 3:
           fscanf(configuration, "%d", &input);
+          printf("%d ", input);
           setHP(thisSprite, input);
           break;
         // strength
         case 4:
           fscanf(configuration, "%d", &input);
+          printf("%d ", input);
           setStrength(thisSprite, input);
           break;
         // accuracy
         case 5:
           fscanf(configuration, "%d", &input);
+          printf("%d ", input);
           setAccuracy(thisSprite, input);
           break;
       } // end switch
     } // end for
+
+    // add the GameSprites to their appropriate teams
     if(thisSprite->type == HEALER || thisSprite->type == FIGHTER) {
       appendDArray(allies, thisSprite);
     }

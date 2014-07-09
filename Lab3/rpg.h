@@ -24,6 +24,7 @@ void resetActionQueue(GameSprite*);
 void runBattle(FILE*);
 int checkOutcome(ArrayList*, ArrayList*);
 GameSprite* allocGameSprite(uint);
+void releaseGameSprite(GameSprite*);
 void setType(GameSprite*, SType);
 void setSpeed(GameSprite*, uint);
 void setHP(GameSprite*, uint);

@@ -24,13 +24,17 @@ DoubleLinkedList* allocDList(uint elementSize, void (*releaser)(Object), void (*
 //This function is not access directly because it is not part of the DoubleLinkedList.h
 void releaseDNode(DNode* node, void (*releaseData)(Object)){
 	if(node){
+		puts("node");
 		if(node->data){
+			puts("releaseData");
 			//ideally this should be a release function
 			releaseData(node->data);
 		}
 		if(node->next){
+			puts("next");
 			releaseDNode(node->next, releaseData);
 		}
+		puts("free node");
 		free(node);
 	}
 }
