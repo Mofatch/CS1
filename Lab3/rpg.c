@@ -3,7 +3,7 @@
 // using player/enemy info, run an action phase (attack or heal)
 bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   // target of action
-  GameSprite *target;
+  GameSprite *target = NULL;
   int roll, pos;
 
   // ENEMY
@@ -13,7 +13,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
       if(target) {
         // release previous memory if it contained a dead GameSprite
         if(target->hp == 0) {
-          releaseGameSprite(target);
+          free(target);
         }
       }
       pos = rand() % players->length;
@@ -28,7 +28,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
       if(target) {
         // release previous memory if it contained a dead GameSprite
         if(target->hp == 0) {
-          releaseGameSprite(target);
+          free(target);
         }
       }
       pos = rand() % enemies->length;
@@ -43,7 +43,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
       if(target) {
         // release previous memory if it contained a dead GameSprite
         if(target->hp == 0) {
-          releaseGameSprite(target);
+          free(target);
         }
       }
       pos = rand() % players->length;
@@ -80,12 +80,8 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
         break;
       case HEALER:
         // heal random ally
-        if(target->hp == 0) {
-          printf("Cannot revive %d...", target->id);
-        }
-        else {
-          target->hp += gs->strength;
-        }
+        target->hp += gs->strength;
+
         // replace with healed ally
         setDArray(players, pos, target);
         break;
@@ -94,10 +90,11 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
     printf("%d has %d hp and %d has %d hp.\n", gs->id, gs->hp, 
                                      target->id, target->hp);
 
-    releaseGameSprite(target);
+    free(target);
     return true;
   }
-  printf("Miss!\n\n");
+  free(target);
+  printf("Miss!\n");
   return false;
 }
 
@@ -137,7 +134,7 @@ int sumHealth(ArrayList *list) {
     }
   }
 
-  releaseGameSprite(currentGS);
+  free(currentGS);
   return totalHP;
 }
 
@@ -161,12 +158,13 @@ int checkOutcome(ArrayList* players, ArrayList* enemies) {
 GameSprite* allocGameSprite(uint idNum) {
   GameSprite *newGameSprite = malloc(sizeof(GameSprite));
   newGameSprite->id = idNum;
+  newGameSprite->actions = allocPQueue(sizeof(bool), PQMODE_QUEUE);
+  setReleasePQueue(newGameSprite->actions, releasePrimitive);
 
   return newGameSprite;
 }
 
 void releaseGameSprite(GameSprite* gs) {
-  printf("Releasing %d\n", gs->id);
   if(gs->actions) {
     releasePQueue(gs->actions);
   }
@@ -234,16 +232,12 @@ void runBattle(FILE *configuration) {
         case 0:
           fscanf(configuration, "%d", &input);
           thisSprite = allocGameSprite(input);
-          printf("%d ", input);
-          thisSprite->actions = allocPQueue(sizeof(bool), PQMODE_QUEUE);
-          setReleasePQueue(thisSprite->actions, releasePrimitive);
           break;
         // type
         case 1:
           // double scan for space
           fscanf(configuration, "%c", &type);
           fscanf(configuration, "%c", &type);
-          printf("%c ", type);
           if(type == 'E') {
             setType(thisSprite, ENEMY);
           }
@@ -257,26 +251,22 @@ void runBattle(FILE *configuration) {
         // speed
         case 2:
           fscanf(configuration, "%d", &input);
-          printf("%d ", input);
           setSpeed(thisSprite, input);
           resetActionQueue(thisSprite);
           break;
         // hp
         case 3:
           fscanf(configuration, "%d", &input);
-          printf("%d ", input);
           setHP(thisSprite, input);
           break;
         // strength
         case 4:
           fscanf(configuration, "%d", &input);
-          printf("%d ", input);
           setStrength(thisSprite, input);
           break;
         // accuracy
         case 5:
           fscanf(configuration, "%d", &input);
-          printf("%d ", input);
           setAccuracy(thisSprite, input);
           break;
       } // end switch
@@ -301,26 +291,25 @@ void runBattle(FILE *configuration) {
     // check for action on allies side
     for(i = 0; i < allies->length; ++i) {
       thisAlly = (GameSprite *)getDArray(allies, i);
+      action = (bool *)front(thisAlly->actions);
       // only proceed if this ally is alive
       if(thisAlly->hp > 0) {
-        action = (bool *)front(thisAlly->actions);
         if(action == true) {
           actionProcess(getDArray(allies, i), allies, enemies);
           resetActionQueue(getDArray(allies, i));
         }
         else {
           dequeue(thisAlly->actions);
-        }
-      }
-    }
+        }// end else
+      }// end if
+    }// end for
 
     // check for action on enemy side
     for(i = 0; i < enemies->length; ++i) {
       thisEnemy = (GameSprite *)getDArray(enemies, i);
-
+      action = (bool *)front(thisEnemy->actions); 
       // only proceed if this ally is alive
       if(thisEnemy->hp > 0) {
-        action = (bool *)front(thisEnemy->actions); 
         if(action == true) {
           actionProcess(getDArray(enemies, i), allies, enemies);
           resetActionQueue(getDArray(enemies, i));
