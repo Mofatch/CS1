@@ -2,26 +2,38 @@
 
 // using player/enemy info, run an action phase (attack or heal)
 bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
-  // TO DO: can't fight while dead
   // target of action
   GameSprite *target;
   int roll, pos;
 
+  // enemy
   if(gs->type == ENEMY) {
-    pos = rand() % players->length;
-    target = (GameSprite *)getDArray(players, pos);
+    // find a live target
+    do {
+      pos = rand() % players->length;
+      target = (GameSprite *)getDArray(players, pos);
+    } while(target->hp == 0);
     printf("%d attacks %d!\n", gs->id, target->id);
   }
+  // fighter
   else if(gs->type == FIGHTER) {
+    // find a live target
+    do {
     pos = rand() % enemies->length;
     target = (GameSprite *)getDArray(enemies, pos);
+    } while(target->hp == 0);
     printf("%d attacks %d!\n", gs->id, target->id);
   }
+  // healer
   else if(gs->type == HEALER) {
-    pos = rand() % players->length;
-    target = (GameSprite *)getDArray(players, pos);
+    // find a live target
+    do {
+      pos = rand() % players->length;
+      target = (GameSprite *)getDArray(players, pos);
+    } while(target->hp == 0);
     printf("%d attempts to heal %d!\n", gs->id, target->id);
   }
+
   // random number in [0,100]
   roll = rand() % 101;
   if(roll < gs->accuracy) {
