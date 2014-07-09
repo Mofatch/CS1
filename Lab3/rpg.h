@@ -29,5 +29,6 @@ void setSpeed(GameSprite*, uint);
 void setHP(GameSprite*, uint);
 void setStrength(GameSprite*, uint);
 void setAccuracy(GameSprite*, uint);
+int countAlive(ArrayList*);
 
 #endif /* RPG_H_ */

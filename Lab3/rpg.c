@@ -6,7 +6,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   GameSprite *target;
   int roll, pos;
 
-  // enemy
+  // ENEMY
   if(gs->type == ENEMY) {
     // find a live target
     do {
@@ -15,7 +15,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
     } while(target->hp == 0);
     printf("%d attacks %d!\n", gs->id, target->id);
   }
-  // fighter
+  // FIGHTER
   else if(gs->type == FIGHTER) {
     // find a live target
     do {
@@ -24,7 +24,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
     } while(target->hp == 0);
     printf("%d attacks %d!\n", gs->id, target->id);
   }
-  // healer
+  // HEALER
   else if(gs->type == HEALER) {
     // find a live target
     do {
@@ -39,13 +39,14 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
   if(roll < gs->accuracy) {
     switch(gs->type) {
       case ENEMY:
-        // get a random ally and reduce its hp
+        // get a random player and reduce its hp
         if(gs->strength < target->hp) {
           target->hp -= gs->strength;
         }
         else {
           target->hp = 0;
         }
+        // replace with injured player
         setDArray(players, pos, target);
         break;
       case FIGHTER:
@@ -56,6 +57,7 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
         else {
           target->hp = 0;
         }
+        // replace with injured enemy
         setDArray(enemies, pos, target);
         break;
       case HEALER:
@@ -66,17 +68,16 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
         else {
           target->hp += gs->strength;
         }
+        // replace with healed ally
         setDArray(players, pos, target);
         break;
     }
-    // hit
     printf("Hit! ");
     printf("%d has %d hp and %d has %d hp.\n", gs->id, gs->hp, 
                                      target->id, target->hp);
 
     return true;
   }
-  // miss
   printf("Miss!\n\n");
   return false;
 }
@@ -99,7 +100,7 @@ void resetActionQueue(GameSprite* gs) {
     enqueue(gs->actions, allocBoolWith(false));
   }
 
-  // last element is true
+  // lastly, add true
   if(i <= 10) {
     enqueue(gs->actions, allocBoolWith(true));
   }
@@ -122,12 +123,15 @@ int sumHealth(ArrayList *list) {
 
 // determine if the battle is over or not
 int checkOutcome(ArrayList* players, ArrayList* enemies) {
+  // player loss
   if(sumHealth(players) == 0) {
-    return 1;
-  }
-  else if(sumHealth(enemies) == 0) {
     return -1;
   }
+  // enemy loss
+  else if(sumHealth(enemies) == 0) {
+    return 1;
+  }
+  // game not over
   else {
     return 0;
   }
@@ -141,7 +145,7 @@ GameSprite* allocGameSprite(uint idNum) {
   return newGameSprite;
 }
 
-// set healer, fighter, or enemy
+// set HEALER, FIGHTER, or ENEMY
 void setType(GameSprite* gs, SType t) {
   gs->type = t;
 }

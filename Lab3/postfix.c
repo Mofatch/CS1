@@ -1,4 +1,3 @@
-// TO DO: Check about negative-valued integers used in postfix
 // TO DO: screenshots
 #include <math.h>
 #include <stdio.h>

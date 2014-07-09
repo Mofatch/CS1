@@ -1,4 +1,9 @@
-// Independent main for testing RPG
+/* Authors: Trevor Minnix/Travis Bashor
+  Class: COP3502C, Summer C 2014
+  Lab 3, Part 2, The Game: The purpose of this program is to simulate a turn-based
+  battle that might occur in an RPG. A configuration file is used to generate a list
+  of allies and enemies to do battle in the program. A queue is used to implement 
+  character turns/attacks.*/
 
 #include <stdio.h>
 #include <math.h>
@@ -16,5 +21,6 @@ int main(int argc, char **argv) {
     srand(atoi(argv[2]));
   }
 
+  // runs the battle and closes ifp at finish
   runBattle(ifp);
 }
