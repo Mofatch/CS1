@@ -26,8 +26,13 @@ bool actionProcess(GameSprite* gs, ArrayList* players, ArrayList* enemies) {
     // find a live target
     do {
       if(target) {
+        // if the previous fighter in this round took out the last enemy
+        if(target->hp == 0 && sumHealth(enemies) == 0) {
+          free(target);
+          return false;
+        }
         // release previous memory if it contained a dead GameSprite
-        if(target->hp == 0) {
+        else if(target->hp == 0) {
           free(target);
         }
       }
@@ -297,8 +302,8 @@ void runBattle(FILE *configuration) {
       // only proceed if this ally is alive
       if(thisAlly->hp > 0) {
         if(action == true) {
-          actionProcess(getDArray(allies, i), allies, enemies);
-          resetActionQueue(getDArray(allies, i));
+          actionProcess(thisAlly, allies, enemies);
+          resetActionQueue(thisAlly);
         }
         else {
           dequeue(thisAlly->actions);
@@ -321,9 +326,7 @@ void runBattle(FILE *configuration) {
         }
       }
     }
-
   } while(checkOutcome(allies, enemies) == 0);
-  
   if(sumHealth(allies) == 0) {
     printf("\nBattle lost in %d turns!\n", turnCounter);
   }
