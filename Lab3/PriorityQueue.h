@@ -35,7 +35,6 @@ typedef struct _PriorityQueue {
 
 PQueue* allocPQueue(uint, PQMode);
 void releasePQueue(PQueue*);
-void releaser(Object);
 Object peekMin(PQueue*);
 Object peekMax(PQueue*);
 void removeMin(PQueue*);
