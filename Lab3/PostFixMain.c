@@ -10,8 +10,7 @@
 #include "postfix.c"
 
 int main(int argc, char *argv[]) {
-  int count;
-
+  // run a postfix test
   if(argc > 1) {
     puts("**Postfix Test**");
     printf("Result: %d\n", postfix(argc, argv));

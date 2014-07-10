@@ -134,6 +134,8 @@ int sumHealth(ArrayList *list) {
     }
   }
 
+  // important not to use releaseGameSprite() because
+  // actions PQueue would be lost outside the function.
   free(currentGS);
   return totalHP;
 }
@@ -209,7 +211,7 @@ int countAlive(ArrayList *group) {
     }
   }
 
-
+  free(thisSprite);
   return numAlive;
 }
 
@@ -248,7 +250,7 @@ void runBattle(FILE *configuration) {
             setType(thisSprite, FIGHTER);
           }
           break;
-        // speed
+        // speed, build action queue
         case 2:
           fscanf(configuration, "%d", &input);
           setSpeed(thisSprite, input);
@@ -321,6 +323,7 @@ void runBattle(FILE *configuration) {
     }
 
   } while(checkOutcome(allies, enemies) == 0);
+  
   if(sumHealth(allies) == 0) {
     printf("\nBattle lost in %d turns!\n", turnCounter);
   }
