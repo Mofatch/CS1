@@ -114,7 +114,7 @@ void add(PQueue* pq, Object obj){
 	pq->priorityExtractor(current->data, currentHolder);
 	DNode* node = (DNode*)calloc(1, sizeof(DNode));
 	node->data = calloc(1, pq->elements->elementSize);
-	memcpy(node->data, obj, sizeof(pq->elements->elementSize));
+	memcpy(node->data, obj, pq->elements->elementSize);
 	node->next = NULL;
 	node->prev = NULL;
 	if(*objHolder < *currentHolder){
