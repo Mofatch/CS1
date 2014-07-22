@@ -7,6 +7,10 @@
 
 // includes
 #include <iostream>
+#include "Course.h"
+#include "Student.h"
+
+using namespace std;
 
 // prototypes
 void createStudent(map<string, Student>);
@@ -21,6 +25,19 @@ int main() {
 
 // main functions
 void createStudent(map<string str, Student stud>) {
+  // variables used for creating a new student
+  string name;
+  uint pid, year;
+
+  // gather information for new student
+  cout << "Please enter student information.\n";
+  cout << "Name: ";
+  cin >> name; 
+  cout << "PID: ";
+  cin >> pid;
+  cout << "Academic Year: ";
+  cin >> year;
+
   // CODE
 }
 Course createCourse() {
