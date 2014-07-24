@@ -1,20 +1,20 @@
 #include "Student.h"
 
-uint getPID() {
+uint Student::getPID() {
   return this->PID;
 }
-void setPID(uint num) {
+void Student::setPID(uint num) {
   this->PID = num;
 }
-string getName() {
+string Student::getName() {
   return this->name;
 }
-void setName(string nom) {
+void Student::setName(string nom) {
   this->name = nom;
 }
-uint getAcademicYear() {
+uint Student::getAcademicYear() {
   return this->academicYear;
 }
-void setAcademicYear(uint year) {
+void Student::setAcademicYear(uint year) {
   this->academicYear = year;
 }

@@ -1,14 +1,14 @@
 #include "Course.h"
 
-string getCourseName() {
+string Course::getCourseName() {
   return this->courseName;
 }
-void setCourseName(string title) {
+void Course::setCourseName(string title) {
   this->courseName = title;
 }
-uint getNumberCredits() {
+uint Course::getNumberCredits() {
   return this->numberCredits;
 }
-void setNumberCredits(uint num) {
+void Course::setNumberCredits(uint num) {
   this->numberCredits = num;
 }

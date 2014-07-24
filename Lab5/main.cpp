@@ -14,25 +14,26 @@
 #include "Student.h"
 
 // declarations
-using std::string;
-using std::map;
+using namespace std;
 
 // typedefs
 typedef unsigned int uint;
+typedef map<string, Student> SCMap;
 
 // // prototypes
-// void createStudent(map<string, Student>);
-// Course createCourse();
-// void addCourse(Student, Course);
-// void printStudents();
+void createStudent(SCMap);
+Course createCourse();
+void addCourse(Student, Course);
+void printStudents();
 
 int main() {
   // CODE
+  cout << "Sup";
   return 0;
 }
 
 // main functions
-void createStudent(map<string str, Student stud>) {
+void createStudent(SCMap myMap) {
   // variables used for creating a new student
   string name;
   uint pid, year;
@@ -46,7 +47,7 @@ void createStudent(map<string str, Student stud>) {
   cout << "Academic Year: ";
   cin >> year;
 
-  // CODE
+  // TODO: student constructor
 }
 Course createCourse() {
   // CODE

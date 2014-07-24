@@ -4,9 +4,11 @@
 // libraries
 #include <iostream>
 #include <string>
+#include <map>
+#include <vector>
 
 // declarations
-using std::string;
+using namespace std;
 
 // typedefs
 typedef unsigned int uint;
