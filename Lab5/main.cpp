@@ -10,8 +10,8 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Course.h"
-#include "Student.h"
+#include "Course.cpp"
+#include "Student.cpp"
 
 // declarations
 using namespace std;
@@ -28,11 +28,11 @@ void printStudents();
 
 int main() {
   // CODE
-  cout << "Sup";
+  createStudent();
   return 0;
 }
 
-// main functions
+// main functions, parameter SCMap myMap
 void createStudent(SCMap myMap) {
   // variables used for creating a new student
   string name;
@@ -47,7 +47,12 @@ void createStudent(SCMap myMap) {
   cout << "Academic Year: ";
   cin >> year;
 
-  // TODO: student constructor, add to map
+  // TODO: add to map
+  Student stud(pid, name, year);
+
+  cout << "Name: " << stud.getName() << endl;
+  cout << "PID: " << stud.getPID() << endl;
+  cout << "Academic Year: " << stud.getAcademicYear() << endl;
 }
 Course createCourse() {
   // CODE

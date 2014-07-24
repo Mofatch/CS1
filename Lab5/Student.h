@@ -18,6 +18,7 @@ class Student {
   string name;
   uint academicYear;
 public:
+  Student(uint, string, uint);
   uint getPID();
   void setPID(uint);
   string getName();
