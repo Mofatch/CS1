@@ -7,16 +7,24 @@
 
 // includes
 #include <iostream>
+#include <string>
+#include <vector>
+#include <map>
 #include "Course.h"
 #include "Student.h"
 
-using namespace std;
+// declarations
+using std::string;
+using std::map;
 
-// prototypes
-void createStudent(map<string, Student>);
-Course createCourse();
-void addCourse(Student, Course);
-void printStudents();
+// typedefs
+typedef unsigned int uint;
+
+// // prototypes
+// void createStudent(map<string, Student>);
+// Course createCourse();
+// void addCourse(Student, Course);
+// void printStudents();
 
 int main() {
   // CODE

@@ -1,6 +1,16 @@
 #ifndef _STUDENT_H_
 #define _STUDENT_H_
 
+// libraries
+#include <iostream>
+#include <string>
+
+// declarations
+using std::string;
+
+// typedefs
+typedef unsigned int uint;
+
 class Student {
   uint PID;
   string name;
