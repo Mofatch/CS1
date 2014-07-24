@@ -27,8 +27,7 @@ void addCourse(Student, Course);
 void printStudents();
 
 int main() {
-  // CODE
-  createStudent();
+  Course testCourse = createCourse();
   return 0;
 }
 
@@ -47,15 +46,34 @@ void createStudent(SCMap myMap) {
   cout << "Academic Year: ";
   cin >> year;
 
-  // TODO: add to map
+  // create new student
   Student stud(pid, name, year);
 
+  // display student information
   cout << "Name: " << stud.getName() << endl;
   cout << "PID: " << stud.getPID() << endl;
   cout << "Academic Year: " << stud.getAcademicYear() << endl;
+
+  // TODO: add to map
 }
 Course createCourse() {
-  // CODE
+  // variables for course information
+  string title;
+  uint credits;
+
+  // gather information for new course
+  cout << "Please enter course information." << endl;
+  cout << "Course Title: ";
+  cin >> title;
+  cout << "Number of Credits: ";
+  cin >> credits;
+
+  // create new course
+  Course crs(title, credits);
+
+  // display course information
+  cout << "Course Title: " << crs.getCourseName() << endl;
+  cout << "Number of Credits: " << crs.getNumberCredits() << endl;
 }
 void addCourse(Student stud, Course crs) {
   // CODE

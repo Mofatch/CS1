@@ -12,3 +12,10 @@ uint Course::getNumberCredits() {
 void Course::setNumberCredits(uint num) {
   this->numberCredits = num;
 }
+Course::Course(string title, uint credits) {
+  // assign class fields
+  numberCredits = credits;
+  courseName = title;
+
+  cout << "Course is being created..." << endl;
+}

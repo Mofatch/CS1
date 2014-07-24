@@ -17,6 +17,7 @@ class Course {
   string courseName;
   uint numberCredits;
 public:
+  Course(string, uint);
   string getCourseName();
   void setCourseName(string);
   uint getNumberCredits();
