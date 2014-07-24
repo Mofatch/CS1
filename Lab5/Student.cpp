@@ -18,3 +18,8 @@ uint Student::getAcademicYear() {
 void Student::setAcademicYear(uint year) {
   this->academicYear = year;
 }
+Student::Student(uint id, string nom, uint year) {
+  PID = id;
+  name = nom;
+  academicYear = year;
+}

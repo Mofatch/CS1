@@ -47,7 +47,7 @@ void createStudent(SCMap myMap) {
   cout << "Academic Year: ";
   cin >> year;
 
-  // TODO: student constructor
+  // TODO: student constructor, add to map
 }
 Course createCourse() {
   // CODE
