@@ -18,21 +18,24 @@ using namespace std;
 
 // typedefs
 typedef unsigned int uint;
-typedef map<string, Student> SCMap;
+typedef map<string, Student> NSMap;
 
 // // prototypes
-void createStudent(SCMap);
+void createStudent(NSMap);
 Course createCourse();
 void addCourse(Student, Course);
 void printStudents();
 
 int main() {
+  // NSMap myMap;
+  // createStudent(myMap);
   Course testCourse = createCourse();
+  cout << "Course Information:" << testCourse << endl;
   return 0;
 }
 
-// main functions, parameter SCMap myMap
-void createStudent(SCMap myMap) {
+// main functions
+void createStudent(NSMap myMap) {
   // variables used for creating a new student
   string name;
   uint pid, year;
@@ -54,7 +57,8 @@ void createStudent(SCMap myMap) {
   cout << "PID: " << stud.getPID() << endl;
   cout << "Academic Year: " << stud.getAcademicYear() << endl;
 
-  // TODO: add to map
+  // add student to myMap
+  // myMap[stud.getName()] = stud;
 }
 Course createCourse() {
   // variables for course information
