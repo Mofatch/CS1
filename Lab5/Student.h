@@ -19,6 +19,9 @@ class Student {
   uint academicYear;
 public:
   Student(uint, string, uint);
+  virtual ~Student() {
+    
+  }
   uint getPID();
   void setPID(uint);
   string getName();
