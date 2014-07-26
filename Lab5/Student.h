@@ -25,6 +25,11 @@ public:
   void setName(string);
   uint getAcademicYear();
   void setAcademicYear(uint year);
+  friend ostream& operator<<(ostream &strm, const Student &stud) {
+    return strm << "Student: " << stud.name << endl
+                << "PID: " << stud.PID << endl
+                << "Academic Year: " << stud.academicYear << endl;
+  }
 };
 
 #endif /* _STUDENT_H_ */
