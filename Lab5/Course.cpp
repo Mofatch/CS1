@@ -19,11 +19,3 @@ Course::Course(string title, uint credits) {
 
   cout << "Course is being created..." << endl;
 }
-string Course::toString() {
-  // TODO: patch minGW to get to_string working
-  return "Title: " + courseName + "\n";
-  // + "Number of Credits: " + std::to_string(numberCredits) + "\n";
-}
-ostream& operator<<(ostream &strm, const Course &crs) {
-  return strm << crs.toString();
-}

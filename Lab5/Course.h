@@ -16,14 +16,16 @@ typedef unsigned int uint;
 class Course {
   string courseName;
   uint numberCredits;
-  friend ostream& operator<<(ostream&, const Course&);
 public:
   Course(string, uint);
   string getCourseName();
   void setCourseName(string);
   uint getNumberCredits();
   void setNumberCredits(uint num);
-  string toString();
+  friend ostream& operator<<(ostream &strm, const Course &crs) {
+    return strm << "Course: " << crs.courseName << endl
+     << "Number of Credits: " << crs.numberCredits << endl;
+  }
 };
 
 #endif /*_COURSE_H_*/

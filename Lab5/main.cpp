@@ -19,7 +19,7 @@ using namespace std;
 // typedefs
 typedef unsigned int uint;
 typedef map<string, Student> NameMap;
-typedef map<uint, vector<Course>> CourseListMap;
+typedef map<uint, vector<Course> > CourseListMap;
 
 // // prototypes
 void createStudent(NameMap);
@@ -31,7 +31,7 @@ int main() {
   // NameMap myMap;
   // createStudent(myMap);
   Course testCourse = createCourse();
-  cout << "Course Information:" << testCourse << endl;
+  cout << "Course Information: " << endl << testCourse << endl;
   return 0;
 }
 
@@ -76,9 +76,8 @@ Course createCourse() {
   // create new course
   Course crs(title, credits);
 
-  // display course information
-  cout << "Course Title: " << crs.getCourseName() << endl;
-  cout << "Number of Credits: " << crs.getNumberCredits() << endl;
+  // return new course
+  return crs;
 }
 void addCourse(Student stud, Course crs) {
   // CODE
