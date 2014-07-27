@@ -25,3 +25,8 @@ Student::Student(uint id, string nom, uint year) {
 
   cout << "Student is being created..." << endl;
 }
+Student::Student() {
+  PID = 1000001;
+  name = "Bosephus";
+  academicYear = 1;
+}

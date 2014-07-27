@@ -22,21 +22,29 @@ typedef map<string, Student> NameMap;
 typedef map<uint, vector<Course> > CourseListMap;
 
 // // prototypes
-void createStudent(NameMap);
+void createStudent();
 Course createCourse();
 void addCourse(Student, Course);
 void printStudents();
 
+// global map variable
+NameMap myMap;
+NameMap::iterator it;
+
 int main() {
-  // NameMap myMap;
-  // createStudent(myMap);
-  Course testCourse = createCourse();
-  cout << "Course Information: " << endl << testCourse << endl;
+  // add student to map
+  createStudent();
+
+  // display student
+  it = myMap.begin();
+  cout << it->first << ": " << it->second << endl;
+  // Course testCourse = createCourse();
+  // cout << "Course Information: " << endl << testCourse << endl;
   return 0;
 }
 
 // main functions
-void createStudent(NameMap myMap) {
+void createStudent() {
   // variables used for creating a new student
   string name;
   uint pid, year;
@@ -59,7 +67,7 @@ void createStudent(NameMap myMap) {
   cout << "Academic Year: " << stud.getAcademicYear() << endl;
 
   // add student to myMap
-  // myMap[stud.getName()] = stud;
+  myMap[stud.getName()] = stud;
 }
 Course createCourse() {
   // variables for course information
