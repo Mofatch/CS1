@@ -16,6 +16,4 @@ Course::Course(string title, uint credits) {
   // assign class fields
   numberCredits = credits;
   courseName = title;
-
-  cout << "Course is being created..." << endl;
 }

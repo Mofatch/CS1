@@ -22,8 +22,6 @@ Student::Student(uint id, string nom, uint year) {
   PID = id;
   name = nom;
   academicYear = year;
-
-  cout << "Student is being created..." << endl;
 }
 Student::Student() {
   PID = 1000001;
