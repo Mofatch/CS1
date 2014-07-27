@@ -26,24 +26,31 @@ void createStudent();
 Course createCourse();
 void addCourse(Student, Course);
 void printStudents();
+bool contains(vector<Course>, Course);
 
 // global map variable
-NameMap myMap;
-NameMap::iterator it;
+NameMap sMap;
+CourseListMap cMap;
 
 int main() {
   // add student to map
   createStudent();
 
   // display student
-  it = myMap.begin();
-  cout << it->first << ": " << it->second << endl;
-  // Course testCourse = createCourse();
-  // cout << "Course Information: " << endl << testCourse << endl;
+  NameMap::iterator studentIterator = sMap.begin();
+  cout << studentIterator->second << endl;
+
+  // create/display test course 
+  Course testCourse = createCourse();
+  cout << "Course Information: " << endl << testCourse << endl << endl;
+
+  // add test course to student's list
+  addCourse(studentIterator->second, testCourse);
+
   return 0;
 }
 
-// main functions
+// main.cpp functions
 void createStudent() {
   // variables used for creating a new student
   string name;
@@ -66,8 +73,8 @@ void createStudent() {
   cout << "PID: " << stud.getPID() << endl;
   cout << "Academic Year: " << stud.getAcademicYear() << endl;
 
-  // add student to myMap
-  myMap[stud.getName()] = stud;
+  // add student to sMap
+  sMap[stud.getName()] = stud;
 }
 Course createCourse() {
   // variables for course information
@@ -88,8 +95,22 @@ Course createCourse() {
   return crs;
 }
 void addCourse(Student stud, Course crs) {
-  // CODE
+  // list of student's courses
+  vector<Course> list = cMap[stud.getPID()];
+
+  // if the student does not have this course
+  if(!contains(list, crs)) {
+    cMap[stud.getPID()].push_back(Course(crs.getCourseName(), crs.getNumberCredits()));
+  }
 }
 void printStudents() {
-  // CODE
+  
+}
+bool contains(vector<Course> v, Course crs) {
+  // check for this course in the vector
+  for(vector<Course>::iterator i = v.begin(); i != v.end(); ++i) {
+    if (*i == crs) return true;
+  }
+
+  return false;
 }

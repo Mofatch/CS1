@@ -28,6 +28,13 @@ public:
     return strm << "Course: " << crs.courseName << endl
      << "Number of Credits: " << crs.numberCredits << endl;
   }
+  friend bool operator==(Course crs1, Course crs2) {
+    return (crs1.courseName == crs2.courseName &&
+            crs1.numberCredits == crs2.numberCredits);   
+  }
+  friend bool operator!=(Course crs1, Course crs2) {
+    return !(crs1 == crs2);
+  }
 };
 
 #endif /*_COURSE_H_*/
