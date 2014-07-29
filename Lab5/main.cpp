@@ -22,27 +22,25 @@ typedef map<string, Student> NameMap;
 typedef map<uint, vector<Course> > CourseListMap;
 
 // // prototypes
-void createStudent();
+Student createStudent();
 Course createCourse();
 void addCourse(Student, Course);
 void printStudents();
 bool contains(vector<Course>, Course);
 bool ask(string);
 
-// global map variable
-NameMap sMap;
-CourseListMap cMap;
+// global map variables
+NameMap studentMap;
+CourseListMap courseMap;
 
 int main() {
 
   do {
-    createStudent();
+    Student stud = createStudent();
     do {
-      NameMap::iterator studentIterator = sMap.end();
-      studentIterator--;
       // add classes
       Course thisCourse = createCourse();
-      addCourse(studentIterator->second, thisCourse);
+      addCourse(stud, thisCourse);
     } while(ask("Add another course?"));
   } while(ask("Would You like to add more students?"));
   printStudents();
@@ -51,7 +49,7 @@ int main() {
 }
 
 // main.cpp functions
-void createStudent() {
+Student createStudent() {
   // variables used for creating a new student
   string name;
   uint pid, year;
@@ -68,8 +66,10 @@ void createStudent() {
   // create new student
   Student stud(pid, name, year);
 
-  // add student to sMap
-  sMap[stud.getName()] = stud;
+  // add student to studentMap
+  studentMap[stud.getName()] = stud;
+
+  return stud;
 }
 Course createCourse() {
   // variables for course information
@@ -90,12 +90,13 @@ Course createCourse() {
   return crs;
 }
 void addCourse(Student stud, Course crs) {
+  cout << "Adding course list for PID: " << stud.getPID() << endl;
   // list of student's courses
-  vector<Course> list = cMap[stud.getPID()];
+  vector<Course> list = courseMap[stud.getPID()];
 
   // if the student does not have this course
   if(!contains(list, crs)) {
-    cMap[stud.getPID()].push_back(Course(crs.getCourseName(), crs.getNumberCredits()));
+    courseMap[stud.getPID()].push_back(Course(crs.getCourseName(), crs.getNumberCredits()));
   }
 }
 void printStudents() {
@@ -105,15 +106,16 @@ void printStudents() {
   // Title
   cout << "**Students**" << endl << endl;
 
-  for(studentIterator = sMap.begin(); studentIterator != sMap.end(); studentIterator++) {
+  for(studentIterator = studentMap.begin(); studentIterator != studentMap.end(); studentIterator++) {
     // identify PID and use PID to get course list
     uint idNo = studentIterator->second.getPID();
-    vector<Course> list = cMap[idNo];
+    vector<Course> list = courseMap[idNo];
 
     // print student's name
     cout << "-Student: " + studentIterator->first << endl;
-
+    cout << "PID: " << idNo << endl;
     // loop through course list for this student printing courses
+    if(list.empty()) { cout << "No courses for this student" << endl; }
     for(int i = 0; i < list.size(); ++i) {
       cout << list.at(i) << endl;
     }
@@ -133,6 +135,7 @@ bool contains(vector<Course> v, Course crs) {
 }
 // ask for input from user return true for yes, false for no
 bool ask(string question) {
+  // TODO: wrong input leads to infinite loop
   bool goodAnswer = false;
   string response;
   do {
