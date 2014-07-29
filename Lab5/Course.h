@@ -19,6 +19,8 @@ class Course {
 public:
   Course(string, uint);
   virtual ~Course() {
+    courseName = "";
+    numberCredits = 0;
   }
   string getCourseName();
   void setCourseName(string);

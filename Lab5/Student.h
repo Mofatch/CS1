@@ -21,6 +21,9 @@ public:
   Student(uint, string, uint);
   Student();
   virtual ~Student() {
+    PID = 0;
+    name = "";
+    academicYear = 0;
   }
   uint getPID();
   void setPID(uint);

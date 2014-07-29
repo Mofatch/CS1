@@ -1,8 +1,11 @@
 /* Authors: Travis Bashor/Trevor Minnix
-  Date: 7/31/14
+  Date: 7/28/14
   Course Info: COP 3502, Summer C 2014 
   Description: The purpose of this program is to demonstrate
   the use of Hash Tables with two classes: Course and Student.
+  A user will be prompted for information on about students and
+  courses and at the end, a list will be printed of all students
+  and their respective courses.
 */ 
 
 // includes
@@ -10,8 +13,8 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Course.cpp"
-#include "Student.cpp"
+#include "Course.h"
+#include "Student.h"
 
 // declarations
 using namespace std;
@@ -21,7 +24,7 @@ typedef unsigned int uint;
 typedef map<string, Student> NameMap;
 typedef map<uint, vector<Course> > CourseListMap;
 
-// // prototypes
+// prototypes
 Student createStudent();
 Course createCourse();
 void addCourse(Student, Course);
@@ -35,6 +38,7 @@ CourseListMap courseMap;
 
 int main() {
 
+  // 2 do-whiles: outside gets a student, inside adds courses
   do {
     Student stud = createStudent();
     do {
@@ -43,6 +47,8 @@ int main() {
       addCourse(stud, thisCourse);
     } while(ask("Add another course?"));
   } while(ask("Would You like to add more students?"));
+
+  // print a list of students and their classes
   printStudents();
 
   return 0;
@@ -90,7 +96,6 @@ Course createCourse() {
   return crs;
 }
 void addCourse(Student stud, Course crs) {
-  cout << "Adding course list for PID: " << stud.getPID() << endl;
   // list of student's courses
   vector<Course> list = courseMap[stud.getPID()];
 
@@ -100,10 +105,10 @@ void addCourse(Student stud, Course crs) {
   }
 }
 void printStudents() {
-  // declare iterators
+  // declare iterator
   NameMap::iterator studentIterator;
 
-  // Title
+  // title
   cout << "**Students**" << endl << endl;
 
   for(studentIterator = studentMap.begin(); studentIterator != studentMap.end(); studentIterator++) {
@@ -125,7 +130,7 @@ void printStudents() {
   }
 
 }
-// check for this course in the vector
+// check for this course in the course list vector
 bool contains(vector<Course> v, Course crs) {
   for(vector<Course>::iterator i = v.begin(); i != v.end(); ++i) {
     if (*i == crs) return true;
@@ -135,21 +140,24 @@ bool contains(vector<Course> v, Course crs) {
 }
 // ask for input from user return true for yes, false for no
 bool ask(string question) {
-  // TODO: wrong input leads to infinite loop
   bool goodAnswer = false;
   string response;
   do {
+    response = "";
     cout << question << endl;
     cout << "1: Yes\n";
     cout << "2: No\n";
     cout << ">";
-    cin >> response;
+    while(response.length() == 0) {
+      getline(cin, response);
+    }
 
     // validate input
     if(response == "1" || response == "2")
      goodAnswer = true;
-    else 
+    else {
       cout << "Please select 1 or 2." << endl;
+    }
 
     // continue to ask until valid input is offered
   } while (!goodAnswer); 
